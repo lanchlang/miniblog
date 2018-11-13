@@ -1,14 +1,57 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"gopkg.in/validator.v2"
+	"miniblog/model"
+	"net/http"
+)
 
 //用户名是否存在
+//用户名长度在1到20之间
+type UsernameExistForm struct {
+	Username string `validate:"min=1,max=20,regexp=^[a-zA-Z0-9\u4E00-\u9FFF]*$"`
+}
 func UsernameExist(ctx *gin.Context)  {
+	username:=ctx.PostForm("username")
+     form:=UsernameExistForm{Username:username}
+	if err := validator.Validate(form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "用户名长度只能在1到20之间,其值为字母、数字和中文"})
+	}
+     exist,err:=model.Exist(&model.User{},"username",username)
+     if err!=nil{
+		 ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		 return
+	 }
+     if exist{
+		 ctx.JSON(http.StatusOK, gin.H{"exist":true,"message": "用户名已经存在"})
+		 return
+	 }
+	ctx.JSON(http.StatusOK, gin.H{"exist":false,"message": "用户名不存在"})
+	return
+}
 
+type EmailExistForm struct{
+	Email string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2,4})$"`
 }
 //邮箱是否存在
 func EmailExist(ctx *gin.Context)  {
-
+	email:=ctx.PostForm("email")
+	form:=EmailExistForm{Email:email}
+	if err := validator.Validate(form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的邮箱"})
+	}
+	exist,err:=model.Exist(&model.User{},"email",email)
+	if err!=nil{
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if exist{
+		ctx.JSON(http.StatusOK, gin.H{"exist":true,"message": "邮箱已经存在"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"exist":false,"message": "邮箱不存在"})
+	return
 }
 
 //提供验证码：提供验证码图片及验证码，以及带过期时间不可更改的随机验证字符串（使用redis保存，以session-id+字符串为key，设置过期时间，随机生成验证码）

@@ -135,3 +135,15 @@ func Search(models []interface{},key string,query string,lastId int,num int) err
 	err := session.Model(&models).Where(key+` like ? and id<?`,"%"+query+"%",lastId).Limit(num).Select()
 	return err
 }
+
+//检查表中的某些字段的值是否存在，例如用户名是否存在，email是否存在
+//输入为model，表中的属性名称，需要匹配的值
+func Exist(model interface{},property string,value interface{})(bool,error){
+	session := GetSession()
+	defer session.Close()
+	count, err := session.Model(model).Where(property+"=?", value).Count()
+	if err != nil {
+		return false, err
+	}
+	return count > 0, nil
+}

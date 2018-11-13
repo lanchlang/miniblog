@@ -17,16 +17,7 @@ type User struct {
 	LastLogin   time.Time `sql:"last_login" json:"last_login"`
 	Avatar      map[string]interface{} `sql:"avatar" json:"avatar"`//缩略图
 }
-func (model *User) TotalCount() (int,error) {
-	session := GetSession()
-	defer session.Close()
-	count,err:= session.Model(model).Count()
-	if err!=nil{
-		println(err.Error())
-		return 0,err
-	}
-	return count,err
-}
+
 func (user *User) BeforeInsert(db orm.DB)  {
 	if user.CreateDate.IsZero() {
 		user.CreateDate = time.Now()
@@ -35,33 +26,7 @@ func (user *User) BeforeInsert(db orm.DB)  {
 		user.LastLogin = time.Now()
 	}
 }
-func (model *User) UsernameExist(username string) (bool, error) {
-	session := GetSession()
-	defer session.Close()
-	count, err := session.Model(model).Where("username=?", username).Count()
-	if err != nil {
-		return false, err
-	}
-	return count > 0, nil
-}
-func (model *User) EmailExist(email string) (bool, error) {
-	session := GetSession()
-	defer session.Close()
-	count, err := session.Model(model).Where("email=?", email).Count()
-	if err != nil {
-		return false, err
-	}
-	return count > 0, nil
-}
-func (model *User) PhoneExist(phone string) (bool, error) {
-	session := GetSession()
-	defer session.Close()
-	count, err := session.Model(model).Where("phone=?", phone).Count()
-	if err != nil {
-		return false, err
-	}
-	return count > 0, nil
-}
+
 func (model *User) FindUserByUsernameAndPassword(username string, password string) error {
 	session := GetSession()
 	defer session.Close()
