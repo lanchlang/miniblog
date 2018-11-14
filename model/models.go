@@ -129,10 +129,10 @@ func Count(model interface{}) (int,error) {
 //输入为models，查询关键字，查询的值，lastId,num
 //输出为error
 //查询结果集直接放到models中
-func Search(models []interface{},key string,query string,lastId int,num int) error{
+func Search(key string,query string,lastId int,num int,models ...interface{}) error{
 	session := GetSession()
 	defer session.Close()
-	err := session.Model(&models).Where(key+` like ? and id<?`,"%"+query+"%",lastId).Limit(num).Select()
+	err := session.Model(models).Where(key+` like ? and id<?`,"%"+query+"%",lastId).Limit(num).Select()
 	return err
 }
 
@@ -146,4 +146,25 @@ func Exist(model interface{},property string,value interface{})(bool,error){
 		return false, err
 	}
 	return count > 0, nil
+}
+
+//通过key值获取model
+//输入为model，key,value
+//输出为error
+//查询结果集直接放到models中
+func GetOneByKey(model interface{},key string,value interface{}) error{
+	session := GetSession()
+	defer session.Close()
+	err := session.Model(model).Where(key+"=?",value).Select()
+	return err
+}
+//通过key值获取models
+//输入为models，key,value
+//输出为error
+//查询结果集直接放到models中
+func GetListByKey(models interface{},key string,value interface{}) error{
+	session := GetSession()
+	defer session.Close()
+	err := session.Model(models).Where(key+"=?",value).Select()
+	return err
 }
