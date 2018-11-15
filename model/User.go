@@ -1,6 +1,7 @@
 package model
 
 import (
+	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"
 	"miniblog/util"
 	"time"
@@ -40,8 +41,8 @@ func (model *User) FindUserByEmailAndPassword(email string, password string) err
 	session := GetSession()
 	defer session.Close()
 	err := session.Model(model).Where("email=? and password=?", email, util.Hash(password)).Select()
-	if err != nil {
-		print(err.Error())
+	if err ==pg.ErrNoRows {
+		return nil
 	}
 	return err
 }
@@ -49,8 +50,8 @@ func (model *User) FindUserByPhoneAndPassword(phone string, password string) err
 	session := GetSession()
 	defer session.Close()
 	err := session.Model(model).Where("phone=? and password=?", phone, util.Hash(password)).Select()
-	if err != nil {
-		print(err.Error())
+	if err ==pg.ErrNoRows {
+		return nil
 	}
 	return err
 }
@@ -58,8 +59,8 @@ func (model *User) FindUserByEmail(email string) error {
 	session := GetSession()
 	defer session.Close()
 	err := session.Model(model).Where("email=?", email).Select()
-	if err != nil {
-		print(err.Error())
+	if err ==pg.ErrNoRows {
+		return nil
 	}
 	return err
 }

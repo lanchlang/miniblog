@@ -1,6 +1,8 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type PhoneCaptcha struct{
 	tableName struct{} `sql:"t_phone_captcha"`
@@ -14,6 +16,17 @@ type PhoneCaptcha struct{
 func (phoneCaptcha *PhoneCaptcha) GetPhoneCaptcha(phone,captcha string)(error){
 	session:=GetSession()
 	defer session.Close()
-	err:=session.Model(phoneCaptcha).Where("phone=? and verify_code=?",phone,captcha).Select()
-	return err
+	var captchas []PhoneCaptcha
+	err:=session.Model(&captchas).Where("phone=? and verify_code=?",phone,captcha).Order("id desc").Select()
+	if err!=nil{
+		return err
+	}
+	//存在，则找最近的匹配
+	if captchas!=nil && len(captchas)>0{
+		phoneCaptcha.Phone=captchas[0].Phone
+		phoneCaptcha.Id=captchas[0].Id
+		phoneCaptcha.VerifyCode=captchas[0].VerifyCode
+		phoneCaptcha.Expires=captchas[0].Expires
+	}
+	return nil
 }

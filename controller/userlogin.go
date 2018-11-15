@@ -1,12 +1,13 @@
 package controller
 
 import (
+	"bytes"
 	"errors"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
 	"github.com/northbright/aliyun/message"
 	"gopkg.in/validator.v2"
+	"html/template"
 	"miniblog/config"
 	"miniblog/model"
 	"miniblog/util"
@@ -144,24 +145,28 @@ func RegisterWithEmail(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"exist": true, "message": "邮箱已经存在"})
 		return
 	}
-	verifyCode:=util.Hash(time.Now().String()) //生成验证码
-    //向注册邮箱发送邮件（邮件中包含链接，链接中包含验证信息）
-    mailHeader:="Email地址验证"
-    mailBody:=generateVerifyBodyContent("http://www.hotmm8.com/verify/email",verifyCode,email)
-    err=util.SendVerifyMail(email,mailHeader,mailBody)
-    if err!=nil{
+	verifyCode := util.Hash(time.Now().String()) //生成验证码
+	//向注册邮箱发送邮件（邮件中包含链接，链接中包含验证信息）
+	mailHeader := "Email地址验证"
+	mailBody,err := generateVerifyBodyContent("template/email_verify.html",verifyCode, email)
+	if err!=nil{
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务，请稍后再试"})
+		return
+	}
+	err = util.SendVerifyMail(email, mailHeader, mailBody)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务，请稍后再试"})
 		return
 	}
 	//将用户信息插入待验证的表中
-	user:=&model.EmailRegisterUser{
-		Username:username,
-		Email:email,
-		Password:util.Hash(password),
-		Expires:time.Now().Add(168*time.Hour),
-		VerifyCode:verifyCode,
+	user := &model.EmailRegisterUser{
+		Username:   username,
+		Email:      email,
+		Password:   util.Hash(password),
+		Expires:    time.Now().Add(168 * time.Hour),
+		VerifyCode: verifyCode,
 	}
-	err=model.Save(user)
+	err = model.Save(user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
@@ -172,60 +177,56 @@ func RegisterWithEmail(ctx *gin.Context) {
 }
 
 //生成邮箱验证内容
-func generateVerifyBodyContent(url string,code string,email string) string{
-	href := url+"?code=" + code+"&email="+email
-    content:=`
-    <h3>Email地址验证</h3>
-    <p>这封信是由热辣妹妹网发送的。</p>
-    <p>您收到这封邮件，是由于在热辣妹妹网进行了新用户注册，或者用户修改密码使用了这个邮箱地址。如果您并没有访问过热辣妹妹网，或者没有进行以上操作，请忽略这封邮件。您不需要退订或进行其他下一步的操作。</p>
-    <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-    <h2>账号激活说明</h2>
-    <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-    <p>如果您是热辣妹妹网的新用户，或在修改您的密码时使用了本地址，我们需要对您的地址有效性进行验证以避免垃圾邮件或地址被滥用。</p>
-    <p>您只需要点击下面的链接即可激活您的账户：</p>
-    <p><a href="`+href+`">`+href+`</a></p>
-    <p>(如果上面不是链接形式，请将该地址手工粘贴到浏览器地址栏再访问)</p>
-    <p>感谢您的访问，祝您使用愉快!</p>
-    <p><a href="https://www.hotmm8.com">热辣妹妹网</a></p>
-    `
-	return content
+func generateVerifyBodyContent(templateName string,code string, email string) (string,error) {
+	t,err:=template.ParseFiles(templateName)
+	if err!=nil{
+		return "",err
+	}
+	buf:=new(bytes.Buffer)
+	err=t.Execute(buf, map[string]string{"code":code,"email":email})
+	if err!=nil{
+		return "",err
+	}
+	return buf.String(),nil
 }
+
 //验证邮箱
 //1:通过验证码获取记录
 //2:查看是否过期
 //3:保存到主表中
 //4:返回
 func VerifyRegisterThroughEmail(ctx *gin.Context) {
-      code:=ctx.Query("code")
-      var emailRegisterUser =new(model.EmailRegisterUser)
-      //通过验证码获取记录
-      err:=model.GetOneByKey(emailRegisterUser,"verify_code",code)
-      if err!=nil{
-		  ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
-		  return
-	  }
-      //查看是否过期
-      if time.Now().After(emailRegisterUser.Expires){
-		  ctx.JSON(http.StatusBadRequest, gin.H{"error": "邮箱链接已经过期，请重新注册，谢谢！"})
-		  return
-	  }
-      //保存到主表中
-      now:=time.Now()
-      user:=&model.User{
-      	   Username:emailRegisterUser.Username,
-      	   Password: emailRegisterUser.Password,
-      	   Email:emailRegisterUser.Email,
-      	   CreateDate:now,
-      	   LastLogin:now,
-	  }
-      err=model.Save(user)
-	  if err!=nil{
+	code := ctx.Query("code")
+	var emailRegisterUser = new(model.EmailRegisterUser)
+	//通过验证码获取记录
+	err := model.GetOneByKey(emailRegisterUser, "verify_code", code)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
-	  }
-      //成功之后，返回
-	   ctx.JSON(http.StatusOK, user)
+	}
+	//查看是否过期
+	if time.Now().After(emailRegisterUser.Expires) {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "邮箱链接已经过期，请重新注册，谢谢！"})
+		return
+	}
+	//保存到主表中
+	now := time.Now()
+	user := &model.User{
+		Username:   emailRegisterUser.Username,
+		Password:   emailRegisterUser.Password,
+		Email:      emailRegisterUser.Email,
+		CreateDate: now,
+		LastLogin:  now,
+	}
+	err = model.Save(user)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	//成功之后，返回
+	ctx.JSON(http.StatusOK, user)
 }
+
 type PhoneExistForm struct {
 	Phone string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
 }
@@ -261,41 +262,41 @@ type SendCaptchaToPhoneForm struct {
 //发送手机验证码
 func SendCaptchaToPhone(ctx *gin.Context) {
 	//TODO:添加一些验证的数据，不能让机器发送
-	phone:=ctx.PostForm("phone")
+	phone := ctx.PostForm("phone")
 	//校验
 	form := SendCaptchaToPhoneForm{Phone: phone}
 	if err := validator.Validate(form); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的电话"})
 		return
 	}
-    //发送验证码
-    verifyCode:=util.GenerateRandomNumberString(4)
-    err:=sendMessageCaptcha(phone,verifyCode)
-    if err!=nil{
+	//发送验证码
+	verifyCode := util.GenerateRandomNumberString(4)
+	err := sendMessageCaptcha(phone, verifyCode)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
-    //保存验证码
-    phoneCaptcha:=&model.PhoneCaptcha{
-    	Phone:phone,
-    	VerifyCode:verifyCode,
-    	Expires:time.Now().Add(15*time.Minute),//15分钟之后失效
+	//保存验证码
+	phoneCaptcha := &model.PhoneCaptcha{
+		Phone:      phone,
+		VerifyCode: verifyCode,
+		Expires:    time.Now().Add(15 * time.Minute), //15分钟之后失效
 	}
-    err=model.Save(phoneCaptcha)
-    if err!=nil{
+	err = model.Save(phoneCaptcha)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{"message": "验证码已发送"})
 }
 
-//发送验证码
-func sendMessageCaptcha(phone string,captcha string) error{
+//发送手机验证码
+func sendMessageCaptcha(phone string, captcha string) error {
 	var aliConfig config.Config
 	if err := config.LoadConfig("config/aliyun_message_config.json", &aliConfig); err != nil {
-        return err
+		return err
 	}
-	param:="{\"code\":\""+captcha+"\"}"
+	param := "{\"code\":\"" + captcha + "\"}"
 	// Creates a new client.
 	client := message.NewClient(aliConfig.AccessKeyID, aliConfig.AccessKeySecret)
 	// Send SMS.
@@ -305,47 +306,48 @@ func sendMessageCaptcha(phone string,captcha string) error{
 		aliConfig.SMS.TemplateCode,
 		param,
 	)
-	if err!=nil{
+	if err != nil {
 		return err
 	}
-	if ok && smsResp.Code=="OK"{
+	if ok && smsResp.Code == "OK" {
 		return nil
 	}
 	return errors.New("发生错误")
 }
 
 //验证验证码和手机号码是否匹配或过期
-type VerifyPhoneCaptchaForm struct{
-	Phone string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
+type VerifyPhoneCaptchaForm struct {
+	Phone   string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
 	Captcha string `validate:"min=4,max=9,regexp=^\\d{4,9}$"`
 }
+
 //验证手机及其验证码
 //TODO:记录错误到log
 func VerifyPhoneCaptcha(ctx *gin.Context) {
-	phone:=ctx.PostForm("phone")
-	captcha:=ctx.PostForm("captcha")
+	phone := ctx.PostForm("phone")
+	captcha := ctx.PostForm("captcha")
 	//校验
-	form := VerifyPhoneCaptchaForm{Phone: phone,Captcha:captcha}
+	form := VerifyPhoneCaptchaForm{Phone: phone, Captcha: captcha}
 	if err := validator.Validate(form); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的电话和验证码"})
 		return
 	}
-    //获取记录
-	phoneCaptcha:=new(model.PhoneCaptcha)
-	err:=phoneCaptcha.GetPhoneCaptcha(phone,captcha)
-	if err!=nil{
+	//获取记录
+	phoneCaptcha := new(model.PhoneCaptcha)
+	err := phoneCaptcha.GetPhoneCaptcha(phone, captcha)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
 	//如果不存在这条记录
-	if phoneCaptcha.Id<=0{
+	if phoneCaptcha.Id <= 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "验证失败"})
 		return
 	}
 	//如果超时，返回说明
-	if time.Now().After(phoneCaptcha.Expires){
+	if time.Now().After(phoneCaptcha.Expires) {
 		//删除记录
-		model.Delete(phoneCaptcha,phoneCaptcha.Id)
+		model.Delete(phoneCaptcha, phoneCaptcha.Id)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "验证码已超时"})
 		return
 	}
@@ -358,11 +360,12 @@ func VerifyPhoneCaptcha(ctx *gin.Context) {
 //1：检查用户名和电话号码是否存在，如果已经存在，返回并告知原因
 //2：将用户信息存入用户表中（期间可以设置一些用户的基本信息）
 //3：返回成功信息和用户识别标志
-type RegisterWithPhoneForm struct{
+type RegisterWithPhoneForm struct {
 	Username string `validate:"min=1,max=20,regexp=^[a-zA-Z0-9\u4E00-\u9FFF]*$"`
 	Phone    string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
 	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
 }
+
 func RegisterWithPhone(ctx *gin.Context) {
 	username := ctx.PostForm("username")
 	phone := ctx.PostForm("phone")
@@ -374,7 +377,7 @@ func RegisterWithPhone(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的参数"})
 		return
 	}
-	//再次检查用户名和邮箱是否已经存在，如果已经存在，返回并告知原因
+	//再次检查用户名和电话是否已经存在，如果已经存在，返回并告知原因
 	exist, err := model.Exist(&model.User{}, "username", username)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
@@ -394,20 +397,20 @@ func RegisterWithPhone(ctx *gin.Context) {
 		return
 	}
 	//将用户信息插入待验证的表中
-	user:=&model.User{
-		Username:username,
-		Phone:phone,
-		Password:util.Hash(password),
-		CreateDate:time.Now(),
-		LastLogin:time.Now(),
+	user := &model.User{
+		Username:   username,
+		Phone:      phone,
+		Password:   util.Hash(password),
+		CreateDate: time.Now(),
+		LastLogin:  time.Now(),
 	}
-	err=model.Save(user)
+	err = model.Save(user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
 	//返回，并返回用户信息
-	ctx.JSON(http.StatusOK, gin.H{"message": "非常感谢您的注册！","user":user})
+	ctx.JSON(http.StatusOK, gin.H{"message": "非常感谢您的注册！", "user": user})
 	return
 }
 
@@ -415,42 +418,47 @@ func RegisterWithPhone(ctx *gin.Context) {
 //1：获取邮箱，并在查找是否存在，如果不存在，则返回并说明
 //2：向邮箱中发送重置密码链接（链接中包含有验证信息），将邮箱，验证信息，过期时间保存到邮箱重置密码验证表中
 //3：返回成功信息，并告知用户可以通过邮箱重置密码了
-type RequestResetPasswordThroughEmailForm struct{
-	Email    string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2,4})$"`
+type RequestResetPasswordThroughEmailForm struct {
+	Email string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2,4})$"`
 }
+
 func RequestResetPasswordThroughEmail(ctx *gin.Context) {
-    email:=ctx.PostForm("email")
-	form := RequestResetPasswordThroughEmailForm{Email:email}
+	email := ctx.PostForm("email")
+	form := RequestResetPasswordThroughEmailForm{Email: email}
 	if err := validator.Validate(form); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的邮箱"})
 		return
 	}
 	//查找邮箱是否存在，如果不存在，则返回并说明
-	exist,err:=model.Exist(new(model.User),"email",email)
-	if err!=nil{
+	exist, err := model.Exist(new(model.User), "email", email)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
-	if !exist{
+	if !exist {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "邮箱不存在，请先注册"})
 		return
 	}
 	//向邮箱中发送重置密码链接（链接中包含有验证信息），将邮箱，验证信息，过期时间保存到邮箱重置密码验证表中
-	verifyCode:=util.Hash(time.Now().String()) //生成验证码
-	mailHeader:="修改密码"
-	mailBody:=generateVerifyBodyContent("http://www.hotmm8.com/reset/email/verify",verifyCode,email)
-	err=util.SendVerifyMail(email,mailHeader,mailBody)
-	if err!=nil{
+	verifyCode := util.Hash(time.Now().String()) //生成验证码
+	mailHeader := "修改密码"
+	mailBody,err := generateVerifyBodyContent("template/reset_password_through_email.html",verifyCode, email)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务，请稍后再试"})
+		return
+	}
+	err = util.SendVerifyMail(email, mailHeader, mailBody)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务，请稍后再试"})
 		return
 	}
 	//将用户信息插入待验证的表中
-	user:=&model.EmailRegisterUser{
-		Email:email,
-		Expires:time.Now().Add(168*time.Hour),
-		VerifyCode:verifyCode,
+	user := &model.EmailRegisterUser{
+		Email:      email,
+		Expires:    time.Now().Add(168 * time.Hour),
+		VerifyCode: verifyCode,
 	}
-	err=model.Save(user)
+	err = model.Save(user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
@@ -464,86 +472,351 @@ func RequestResetPasswordThroughEmail(ctx *gin.Context) {
 //验证邮箱重置密码链接：
 //1：提取链接中信息，并在邮箱重置密码验证表查找并验证，如果验证失败：那么返回并告知失败原因
 //2：验证成功：跳转到密码重置的界面（携带一次性验证信息）
+//TODO:跳转链接
 func VerifyResetPasswordLinkThroughEmail(ctx *gin.Context) {
-	code:=ctx.Query("code")
-	email:=ctx.Query("email")
-	var emailRegisterUser =new(model.EmailRegisterUser)
+	code := ctx.Query("code")
+	email := ctx.Query("email")
+	var emailRegisterUser = new(model.EmailRegisterUser)
 	//通过验证码获取记录
-	err:=model.GetOneByKey(emailRegisterUser,"verify_code",code)
-	if err!=nil{
+	err := model.GetOneByKey(emailRegisterUser, "verify_code", code)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
 	//查看是否过期
-	if time.Now().After(emailRegisterUser.Expires){
+	if time.Now().After(emailRegisterUser.Expires) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "邮箱链接已经过期，请重新使用邮箱重置，谢谢！"})
 		return
 	}
 	//比较邮箱是否一致
-	if strings.Compare(email,emailRegisterUser.Email)!=0{
+	if strings.Compare(email, emailRegisterUser.Email) != 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "邮箱有误"})
 		return
 	}
-	tokenStr,err:=util.GenToken(60*10,email)
-	if err!=nil{
+	tokenStr, err := util.GenToken(60*10, email)
+	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
-	ctx.JSON(http.StatusOK,gin.H{"message": "您可以重置密码了","token":tokenStr})
+	ctx.JSON(http.StatusOK, gin.H{"message": "您可以重置密码了", "token": tokenStr})
 }
 
 //完成密码重置：
 //1：验证一次性验证信息，如果失败，返回并告知原因
 //2：重置密码，并返回信息，并告知用户
-func ResetPassword(ctx *gin.Context) {
-    password:=ctx.PostForm("password")
-    tokenStr:=ctx.PostForm("token")
-    token,err:=util.GetToken(tokenStr)
-    if err!=nil{
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "token参数有误"})
-		return
-	}
-    if token,ok:= token.Claims.(jwt.StandardClaims);ok{
+type ResetPasswordForm struct {
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+	TokenStr string
+}
 
-	}else{
+func ResetPassword(ctx *gin.Context) {
+	password := ctx.PostForm("password")
+	tokenStr := ctx.PostForm("token")
+	form := ResetPasswordForm{Password: password, TokenStr: tokenStr}
+	if err := validator.Validate(form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的参数"})
+		return
+	}
+	claims, err := util.GetClaims(tokenStr)
+	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "token参数有误"})
 		return
 	}
+	subject := claims.Subject
+	if isEmail, _ := util.EmailValid(subject); isEmail {
+		user := model.User{}
+		err = model.GetOneByKey(&user, "email", subject)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		user.Password = util.Hash(password)
+		err = model.Update(&user, user.Id, []string{"password"})
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		ctx.JSON(http.StatusOK, gin.H{"message": "密码修改成功"})
+		return
+	}
+	if isPhone, _ := util.PhoneValid(subject); isPhone {
+		user := model.User{}
+		err = model.GetOneByKey(&user, "phone", subject)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		user.Password = util.Hash(password)
+		err = model.Update(&user, user.Id, []string{"password"})
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		ctx.JSON(http.StatusOK, gin.H{"message": "密码修改成功"})
+		return
+	}
+	if isUsername, _ := util.PhoneValid(subject); isUsername {
+		user := model.User{}
+		err = model.GetOneByKey(&user, "username", subject)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		user.Password = util.Hash(password)
+		err = model.Update(&user, user.Id, []string{"password"})
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		ctx.JSON(http.StatusOK, gin.H{"message": "密码修改成功"})
+		return
+	}
+	ctx.JSON(http.StatusBadRequest, gin.H{"error": "不好意思，未找到用户"})
+	return
 }
 
 //请求电话重置密码：
 //1：获取电话，并在查找是否存在，如果不存在，则返回并说明
 //3：返回成功信息（携带一次性验证信息和用户id），并告知用户可以重置密码了
-func RequestResetPasswordThroughPhone(ctx *gin.Context) {
+type RequestResetPasswordThroughPhoneForm struct {
+	Phone string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
+}
 
+func RequestResetPasswordThroughPhone(ctx *gin.Context) {
+	phone := ctx.PostForm("phone")
+	form := RequestResetPasswordThroughPhoneForm{Phone: phone}
+	if err := validator.Validate(form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的电话"})
+		return
+	}
+	//查找电话是否存在，如果不存在，则返回并说明
+	exist, err := model.Exist(new(model.User), "phone", phone)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if !exist {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "电话不存在，请先注册"})
+		return
+	}
+	//发送验证码
+	verifyCode := util.GenerateRandomNumberString(4)
+	err = sendMessageCaptcha(phone, verifyCode)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	//保存验证码
+	phoneCaptcha := &model.PhoneCaptcha{
+		Phone:      phone,
+		VerifyCode: verifyCode,
+		Expires:    time.Now().Add(15 * time.Minute), //15分钟之后失效
+	}
+	err = model.Save(phoneCaptcha)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	//返回token
+	tokenStr, err := util.GenToken(60*10, phone)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"message": "验证码已经发送", "token": tokenStr})
 }
 
 //邮箱登录：
 //0：检查用户是否已经登录，如果已经登录，则返回并告知原因
-//1：验证是否带有验证字符串，并且是否过期，如果验证不通过或已经过期，返回并告知原因
-//2：再次邮箱是否已经存在，如果不存在，返回并告知原因
+//TODO：1：验证是否带有验证字符串，并且是否过期，如果验证不通过或已经过期，返回并告知原因
 //3：校验邮箱和密码如果不成功，返回结果并告知
 //4：加载用户信息，并返回
-func LoginWithEmailAndPassword(ctx *gin.Context) {
+//TODO:加载额外信息
+type LoginWithEmailAndPasswordForm struct {
+	Email    string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2,4})$"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+}
 
+func LoginWithEmailAndPassword(ctx *gin.Context) {
+	//检查用户是否已经登录，如果已经登录，则返回并告知原因
+	hasLogin, err := hasUserLogin(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if hasLogin {
+		ctx.JSON(http.StatusOK, gin.H{"message": "您已经登录了，无需重新登录！"})
+		return
+	}
+	email := ctx.PostForm("email")
+	password := ctx.PostForm("password")
+	form := LoginWithEmailAndPasswordForm{
+		Email:    email,
+		Password: password,
+	}
+	if err := validator.Validate(form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的邮箱和密码"})
+		return
+	}
+	//查找邮箱是否存在，如果不存在，则返回并说明
+	user := model.User{}
+	err = user.FindUserByEmailAndPassword(email, password)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if user.Id <= 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "邮箱或者密码不正确"})
+		return
+	}
+	//加载用户信息，并返回
+	ctx.JSON(http.StatusOK, user)
+	return
+}
+
+//检查用户是否登录
+func hasUserLogin(ctx *gin.Context) (bool, error) {
+	return false, nil
 }
 
 //电话号码登录：
 //0：检查用户是否已经登录，如果已经登录，则返回并告知原因
-//1：验证是否带有验证字符串，并且是否过期，如果验证不通过或已经过期，返回并告知原因
+//TODO：1：验证是否带有验证字符串，并且是否过期，如果验证不通过或已经过期，返回并告知原因
 //2：再次电话是否已经存在，如果不存在，返回并告知原因
 //3：校验电话和密码如果不成功，返回结果并告知
 //4：加载用户信息，并返回
+type LoginWithPhoneAndPasswordForm struct {
+	Phone    string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+}
 
 func LoginWithPhoneAndPassword(ctx *gin.Context) {
-
+	//检查用户是否已经登录，如果已经登录，则返回并告知原因
+	hasLogin, err := hasUserLogin(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if hasLogin {
+		ctx.JSON(http.StatusOK, gin.H{"message": "您已经登录了，无需重新登录！"})
+		return
+	}
+	phone := ctx.PostForm("phone")
+	password := ctx.PostForm("password")
+	form := LoginWithPhoneAndPasswordForm{
+		Phone:    phone,
+		Password: password,
+	}
+	if err := validator.Validate(form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的邮箱和密码"})
+		return
+	}
+	//查找邮箱是否存在，如果不存在，则返回并说明
+	user := model.User{}
+	err = user.FindUserByPhoneAndPassword(phone, password)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if user.Id <= 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "电话或者密码不正确"})
+		return
+	}
+	//加载用户信息，并返回
+	ctx.JSON(http.StatusOK, user)
+	return
 }
 
 //手机验证码登录：
 //1：获取手机号和验证码，进行验证，如果验证成功，如果手机不存在，那么返回，并告知其直接进入注册资料填写阶段
 //2：通过手机号码，获取客户用户资料并返回
-func LoginWithPhoneAndCaptcha(ctx *gin.Context) {
+type LoginWithPhoneAndCaptchaForm struct {
+	Phone string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
+	Code  string `validate:"regexp=^\\d{4}$"`
+}
 
+func LoginWithPhoneAndCaptcha(ctx *gin.Context) {
+	phone := ctx.PostForm("phone")
+	code := ctx.PostForm("code")
+	form := LoginWithPhoneAndCaptchaForm{
+		Phone: phone,
+		Code:  code,
+	}
+	if err := validator.Validate(form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的电话和验证码"})
+		return
+	}
+	captcha := &model.PhoneCaptcha{}
+	if err := captcha.GetPhoneCaptcha(phone, code); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if captcha.Id <= 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "验证失败"})
+		return
+	}
+	if captcha.Expires.Before(time.Now()) {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "验证码已超时"})
+		return
+	}
+	user := new(model.User)
+	if err := model.GetOneByKey(user, "phone", phone); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if user.Id <= 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "电话不存在，请先注册"})
+		return
+	}
+	ctx.JSON(http.StatusOK, user)
+	return
+}
+
+//电话号码登录：
+//0：检查用户是否已经登录，如果已经登录，则返回并告知原因
+//TODO：1：验证是否带有验证字符串，并且是否过期，如果验证不通过或已经过期，返回并告知原因
+//3：校验用户名和密码如果不成功，返回结果并告知
+//4：加载用户信息，并返回
+type LoginWithUsernameAndPasswordForm struct {
+	Username string `validate:"min=1,max=20,^[a-zA-Z0-9\u4E00-\u9FFF]{1,20}$"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+}
+
+func LoginWithUsernameAndPassword(ctx *gin.Context) {
+	//检查用户是否已经登录，如果已经登录，则返回并告知原因
+	hasLogin, err := hasUserLogin(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if hasLogin {
+		ctx.JSON(http.StatusOK, gin.H{"message": "您已经登录了，无需重新登录！"})
+		return
+	}
+	username := ctx.PostForm("username")
+	password := ctx.PostForm("password")
+	form := LoginWithUsernameAndPasswordForm{
+		Username: username,
+		Password: password,
+	}
+	if err := validator.Validate(form); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确的用户名"})
+		return
+	}
+	//查找邮箱是否存在，如果不存在，则返回并说明
+	user := model.User{}
+	err = user.FindUserByUsernameAndPassword(username, password)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if user.Id <= 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "用户名或者密码不正确"})
+		return
+	}
+	//加载用户信息，并返回
+	ctx.JSON(http.StatusOK, user)
+	return
 }
 
 //第三方登陆

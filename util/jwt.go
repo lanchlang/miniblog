@@ -1,6 +1,7 @@
 package util
 
 import (
+	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )
@@ -16,7 +17,7 @@ func GenToken(expiresDuration int64,subject string) (string,error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	ss, err := token.SignedString(JwtKey)
+	ss, err := token.SignedString([]byte(JwtKey))
 	if err != nil {
 		return "",err
 	}
@@ -26,8 +27,22 @@ func GenToken(expiresDuration int64,subject string) (string,error) {
 
 // 获取token
 func GetToken(tokenStr string) (*jwt.Token,error) {
-	token, err := jwt.Parse(tokenStr, func(*jwt.Token) (interface{}, error) {
-		return JwtKey, nil
+	token, err := jwt.ParseWithClaims(tokenStr,&jwt.StandardClaims{}, func(*jwt.Token) (interface{}, error) {
+		return []byte(JwtKey), nil
 	})
 	return token,err
+}
+
+// 获取token
+func GetClaims(tokenStr string) (*jwt.StandardClaims,error) {
+	token, err := jwt.ParseWithClaims(tokenStr,&jwt.StandardClaims{}, func(*jwt.Token) (interface{}, error) {
+		return []byte(JwtKey), nil
+	})
+	if err!=nil{
+		return nil,err
+	}
+	if claims,ok:= token.Claims.(*jwt.StandardClaims);ok{
+		return claims,nil
+	}
+	return nil,errors.New("非法claims")
 }
