@@ -45,7 +45,7 @@ func (model *Comment) GetBlogComment(blogId int64,lastCommentId int64, num int) 
 	session := GetSession()
 	defer session.Close()
 	var comments []Comment
-	err := session.Model(&comments).Where("b_id=? and id>?", blogId,lastCommentId).Limit(num).Select()
+	err := session.Model(&comments).Where("b_id=? and id>?", blogId,lastCommentId).Order("id asc").Limit(num).Select()
 	if err != nil {
 		return nil, err
 	}

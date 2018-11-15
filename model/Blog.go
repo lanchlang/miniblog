@@ -380,3 +380,18 @@ func (model *Blog) Visit() ( error) {
 	return nil
 
 }
+
+//判断用户是否为blog创建者
+func (model *Blog) IsCreatorOfBlog(id int64,userId int64)(bool,error){
+	session := GetSession()
+	defer session.Close()
+	count, err := session.Model(model).
+		Where("id = ? and u_id=?",id,userId).Count()
+	if err != nil {
+		return false,err
+	}
+	if count>0{
+		return true,nil
+	}
+	return false,nil
+}

@@ -1,12 +1,10 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/gin-contrib/sessions"
 	"encoding/gob"
-	"github.com/gin-contrib/sessions/memstore"
-	"miniblog/middleware"
+	"github.com/gin-gonic/gin"
 	"miniblog/controller"
+	"miniblog/middleware"
 	"miniblog/model"
 )
 
@@ -16,38 +14,51 @@ func main() {
 	//go cronCrawl()
 	router := gin.Default()
 	//store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
-	store:= memstore.NewStore([]byte("secret"))
+	//store:= memstore.NewStore([]byte("secret"))
 	//limitHttpMethod:=middleware.LimitHttpMethod(http.MethodGet,http.MethodPost)
-	router.Use(sessions.Sessions("mfsf", store))
+	//router.Use(sessions.Sessions("mfsf", store))
 	router.Use(middleware.GetLoginUser())
 	api:=router.Group("/api/v1")
 	{
-		apiPosts := api.Group("/users")
+		//用户接口
+		apiUsers := api.Group("/users")
 		{
 			//检查用户名，邮箱，电话是否存在
-			apiPosts.GET("/username_exist",controller.UsernameExist)
-			apiPosts.GET("/email_exist",controller.EmailExist)
-			apiPosts.GET("/phone_exist",controller.PhoneExist)
+			apiUsers.GET("/username_exist",controller.UsernameExist)
+			apiUsers.GET("/email_exist",controller.EmailExist)
+			apiUsers.GET("/phone_exist",controller.PhoneExist)
+			//用户通过email，phone，username，captcha登录
+			api.POST("/login/email",controller.LoginWithEmailAndPassword)
+			api.POST("/login/phone",controller.LoginWithPhoneAndPassword)
+			api.POST("/login/username",controller.LoginWithUsernameAndPassword)
+			api.POST("/login/captcha",controller.LoginWithPhoneAndCaptcha)
+			//用户注册
+			api.POST("/register/email",controller.RegisterWithEmail)
+			api.POST("/register/phone",controller.RegisterWithPhone)
+			//请求重置密码
+			api.POST("/forget/password/email",controller.RequestResetPasswordThroughEmail)
+			api.POST("/forget/password/phone",controller.RequestResetPasswordThroughPhone)
+			//重置密码
+			api.POST("/reset/password/",controller.ResetPassword)
+			//检测图形验证码
+			api.POST("/verify_captcha",controller.VerifyCaptcha)
+			//发送手机验证码
+			api.POST("/send_captcha_to_phone",controller.SendCaptchaToPhone)
+			//检测电话验证码
+			api.POST("/verify_phone_captcha",controller.VerifyPhoneCaptcha)
 		}
-		//用户通过email，phone，username，captcha登录
-		api.POST("/login/email",controller.LoginWithEmailAndPassword)
-		api.POST("/login/phone",controller.LoginWithPhoneAndPassword)
-		api.POST("/login/username",controller.LoginWithUsernameAndPassword)
-		api.POST("/login/captcha",controller.LoginWithPhoneAndCaptcha)
-		//用户注册
-		api.POST("/register/email",controller.RegisterWithEmail)
-		api.POST("/register/phone",controller.RegisterWithPhone)
-		//请求重置密码
-		api.POST("/forget/password/email",controller.RequestResetPasswordThroughEmail)
-		api.POST("/forget/password/phone",controller.RequestResetPasswordThroughPhone)
-		//重置密码
-		api.POST("/reset/password/",controller.ResetPassword)
-		//检测图形验证码
-		api.POST("/verify_captcha",controller.VerifyCaptcha)
-		//发送手机验证码
-		api.POST("/send_captcha_to_phone",controller.SendCaptchaToPhone)
-		//检测电话验证码
-		api.POST("/verify_phone_captcha",controller.VerifyPhoneCaptcha)
+		//blog接口
+		apiBlogs := api.Group("/posts")
+		{
+			//增删改查，列表
+			apiBlogs.GET("/:id",controller.GetBlogById)
+			apiBlogs.DELETE("/:id",controller.DeleteBlogById)
+			apiBlogs.PUT("/:id",controller.UpdateBlogById)
+			apiBlogs.POST("/",controller.CreateBlog)
+			apiBlogs.POST("/search",controller.SearchBlog)
+			apiBlogs.GET("/",controller.ListBlog)
+		}
+
 	}
 	//验证通过邮箱发送的重置密码的链接
 	router.GET("/verify_reset_password_link_through_email",controller.VerifyResetPasswordLinkThroughEmail)

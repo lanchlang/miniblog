@@ -674,10 +674,7 @@ func LoginWithEmailAndPassword(ctx *gin.Context) {
 	return
 }
 
-//检查用户是否登录
-func hasUserLogin(ctx *gin.Context) (bool, error) {
-	return false, nil
-}
+
 
 //电话号码登录：
 //0：检查用户是否已经登录，如果已经登录，则返回并告知原因

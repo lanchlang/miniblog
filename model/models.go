@@ -101,10 +101,10 @@ func Get(model interface{},id int64) error {
 //输入为model(用于查找表)和limit,offset
 //输出为error
 //查找到的记录写入models中
-func List(models []interface{},offset int,limit int) (error) {
+func List(models interface{},offset int,limit int) (error) {
 	session := GetSession()
 	defer session.Close()
-	err := session.Model(&models).Offset(offset).Limit(limit).Select()
+	err := session.Model(models).Offset(offset).Limit(limit).Select()
     return err
 }
 //更新某条记录
