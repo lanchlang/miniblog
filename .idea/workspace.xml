@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2534ec50-58a3-4937-acdd-9bc142116593" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/template/email_verify.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/reset_password.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/reset_password_through_email.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/jwt.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/model.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/regex.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/template.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/template.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/validator.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9285aece-b820-49b5-905a-5ffbf332c766.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9285aece-b820-49b5-905a-5ffbf332c766.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/userlogin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/PhoneCaptcha.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/PhoneCaptcha.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/User.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/User.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/util/jwt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/verifycode.html" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -357,10 +341,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1132" height="688" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.676259" visible="true" weight="0.32402235" />
-      <window_info id="Structure" order="1" sideWeight="0.32374102" side_tool="true" visible="true" weight="0.32402235" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.67601246" visible="true" weight="0.32402235" />
+      <window_info id="Structure" order="1" sideWeight="0.32398754" side_tool="true" visible="true" weight="0.32402235" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32733813" />
@@ -371,7 +354,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" weight="0.3291367" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49906892" weight="0.42266187" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49906892" visible="true" weight="0.42266187" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5009311" side_tool="true" weight="0.18738739" />
       <window_info anchor="bottom" id="Database Console" order="11" weight="0.284" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
