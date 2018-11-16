@@ -238,6 +238,70 @@ func ListBlog(ctx *gin.Context){
 			return
 		}
 	}
+	//根据categoryId来获取
+	categoryIdStr:=ctx.Query("category_id")
+	//是否为空
+	if !util.IsEmptyString(categoryIdStr){
+		var err error
+		categoryId,err:=strconv.ParseInt(categoryIdStr,10,64)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
+			return
+		}
+		blogs,err:=new(model.Blog).GetPublicBlogByCategory(categoryId,lastId,config.Default_List_Size)
+		if err!=nil{
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		ctx.JSON(http.StatusOK, blogs)
+	}
+	//根据popularOffset来获取
+	popularOffsetStr:=ctx.Query("popular_offset")
+	//是否为空
+	if !util.IsEmptyString(popularOffsetStr){
+		var err error
+		popularOffset,err:=strconv.ParseInt(popularOffsetStr,10,64)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
+			return
+		}
+		blogs,err:=new(model.Blog).GetPublicBlogByPopular(int(popularOffset),config.Default_List_Size)
+		if err!=nil{
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		ctx.JSON(http.StatusOK, blogs)
+	}
+	//根据popularOffset来获取
+	likeOffsetStr:=ctx.Query("like_offset")
+	//是否为空
+	if !util.IsEmptyString(likeOffsetStr){
+		var err error
+		likeOffset,err:=strconv.ParseInt(likeOffsetStr,10,64)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
+			return
+		}
+		blogs,err:=new(model.Blog).GetPublicBlogByLike(int(likeOffset),config.Default_List_Size)
+		if err!=nil{
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		ctx.JSON(http.StatusOK, blogs)
+	}
+	//根据tag来获取
+	tag:=ctx.Query("tag")
+	//是否为空
+	if !util.IsEmptyString(likeOffsetStr){
+		var err error
+		blogs,err:=new(model.Blog).GetPublicBlogByTag(tag,lastId,config.Default_List_Size)
+		if err!=nil{
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		ctx.JSON(http.StatusOK, blogs)
+	}
+	//获取默认列表，根据创建日期（id）
 	blogs,err:=new(model.Blog).GetPublicBlogByCreateDate(lastId,config.Default_List_Size)
 	if err!=nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
