@@ -110,7 +110,7 @@ func List(models interface{},offset int,limit int) (error) {
 //更新某条记录
 //输入为model，id，以及columns（需要更新的数组）
 //输出为error
-func Update(model interface{},id int64,columns []string)(error){
+func UpdateColumns(model interface{},id int64,columns []string)(error){
 	session := GetSession()
 	defer session.Close()
 	_,err:=session.Model(model).Column(columns...).Where("id=?",id).Update()
@@ -174,4 +174,13 @@ func GetListByKey(models interface{},key string,value interface{}) error{
 	defer session.Close()
 	err := session.Model(models).Where(key+"=?",value).Select()
 	return err
+}
+
+//更新某条记录
+//输入为model
+//输出为error
+func Update(model interface{})(error){
+	session := GetSession()
+	defer session.Close()
+	return session.Update(model)
 }

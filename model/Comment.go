@@ -7,18 +7,25 @@ import (
 
 type Comment struct {
 	tableName struct{} `sql:"t_comment"`
-	Id           int64 `sql:"id,pk" json:"id"`
-	UserId       int64 `sql:"u_id" json:"user_id"`
-	Username     string `sql:"u_name" json:"username"`
-	BlogId       int64  `sql:"b_id" json:"blog_id"`
-	Content      map[string]interface{} `sql:"content" json:"content"`
-	CreateDate   time.Time  `sql:"date" json:"create_date"`
-	Type         int8  `sql:"type" json:"type"`  //类型
-	ReplyId       int64 `sql:"reply_u_id" json:"reply_id"`
-	ReplyUsername     string `sql:"reply_u_name" json:"reply_username"`
-	Deleted       int8  `sql:"deleted" json:"deleted"`   //deleted大于0，则表示已经删除
+	Id           int64 `sql:"id,pk" json:"id" form:"id"`
+	UserId       int64 `sql:"u_id" json:"user_id" form:"user_id"`
+	Username     string `sql:"u_name" json:"username" form:"username"`
+	BlogId       int64  `sql:"b_id" json:"blog_id" form:"blog_id"`
+	Content      map[string]interface{} `sql:"content" json:"content" form:"content"`
+	CreateDate   time.Time  `sql:"date" json:"create_date" form:"create_date"`
+	Type         int8  `sql:"type" json:"type" form:"type"`  //类型
+	ReplyId       int64 `sql:"reply_u_id" json:"reply_id" form:"reply_id"`
+	ReplyUsername     string `sql:"reply_u_name" json:"reply_username" form:"reply_username"`
+	Deleted       int8  `sql:"deleted" json:"deleted" form:"deleted"`   //deleted大于0，则表示已经删除
+}
+func NewComment()interface{}{
+	return new(Comment)
 }
 
+func NewCommentList()interface{}{
+	var list []Comment
+	return &list
+}
 func (comment *Comment) BeforeInsert(db orm.DB) error {
 	if comment.CreateDate.IsZero() {
 		comment.CreateDate = time.Now()

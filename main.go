@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/gob"
 	"github.com/gin-gonic/gin"
+	"miniblog/admincontroller"
 	"miniblog/controller"
 	"miniblog/middleware"
 	"miniblog/model"
@@ -61,7 +62,54 @@ func main() {
 			apiBlogs.POST("/ids",controller.GetListBlogByIds)
 			apiBlogs.GET("/",controller.ListBlog) //通过参数获取列表
 		}
-
+        //comment接口
+        apiComments:=api.Group("/comments")
+        {
+        	apiComments.POST("/",controller.CreateComment)
+        	apiComments.DELETE("/:id",controller.DeleteCommentById)
+		}
+	}
+	adminApi:=router.Group("/api/admin/v1")
+	{
+		//部门接口
+		adminApiDepartment:=adminApi.Group("/departments")
+		{
+			//列表
+			adminApiDepartment.GET("/",admincontroller.BuildList(model.NewDepartmentList))
+			//单个
+			adminApiDepartment.GET("/:id",admincontroller.BuildGet(model.NewDepartment))
+			//创建
+			adminApiDepartment.POST("/",admincontroller.BuildCreate(model.NewDepartment))
+			//更新
+			adminApiDepartment.PUT("/:id",admincontroller.BuildCreate(model.NewDepartment))
+			//删除
+			adminApiDepartment.DELETE("/:id",admincontroller.BuildCreate(model.NewDepartment))
+		}
+		////权限接口
+		//adminApiAuthority:=adminApi.Group("/auths")
+		//{
+		//
+		//}
+		////角色接口
+		//adminApiRole:=adminApi.Group("/roles")
+		//{
+		//
+		//}
+		////用户接口
+		//adminApiUsers:=adminApi.Group("/users")
+		//{
+		//
+		//}
+		////blog接口
+		//adminApiBlogs:=adminApi.Group("/blogs")
+		//{
+		//
+		//}
+		////comment接口
+		//adminApiComments:=adminApi.Group("/comments")
+		//{
+		//
+		//}
 	}
 	//验证通过邮箱发送的重置密码的链接
 	router.GET("/verify_reset_password_link_through_email",controller.VerifyResetPasswordLinkThroughEmail)

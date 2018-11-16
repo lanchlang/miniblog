@@ -531,7 +531,7 @@ func ResetPassword(ctx *gin.Context) {
 			return
 		}
 		user.Password = util.Hash(password)
-		err = model.Update(&user, user.Id, []string{"password"})
+		err = model.UpdateColumns(&user, user.Id, []string{"password"})
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
@@ -547,7 +547,7 @@ func ResetPassword(ctx *gin.Context) {
 			return
 		}
 		user.Password = util.Hash(password)
-		err = model.Update(&user, user.Id, []string{"password"})
+		err = model.UpdateColumns(&user, user.Id, []string{"password"})
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
@@ -563,7 +563,7 @@ func ResetPassword(ctx *gin.Context) {
 			return
 		}
 		user.Password = util.Hash(password)
-		err = model.Update(&user, user.Id, []string{"password"})
+		err = model.UpdateColumns(&user, user.Id, []string{"password"})
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return

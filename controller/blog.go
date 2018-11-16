@@ -65,6 +65,11 @@ func DeleteBlogById(ctx *gin.Context){
 		ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})
 		return
 	}
+    if user.Id<=0{
+		ctx.JSON(http.StatusForbidden,gin.H{"error":"请先登录"})
+		return
+	}
+    //TODO:管理员也可以删除
     err=new(model.Blog).Delete(id,user.Id)
 	if err!=nil{
 		ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})
@@ -98,18 +103,13 @@ func UpdateBlogById(ctx *gin.Context){
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "数据错误"})
 		return
 	}
-	hasLogin,err:=hasUserLogin(ctx)
-    if err!=nil{
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
-		return
-	}
-	if !hasLogin{
-		ctx.JSON(http.StatusForbidden, gin.H{"error": "请先登录"})
-		return
-	}
 	user,err:=getUser(ctx)
 	if err!=nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	if user.Id<=0{
+		ctx.JSON(http.StatusForbidden, gin.H{"error": "请先登录"})
 		return
 	}
 	if isCreator,err:=new(model.Blog).IsCreatorOfBlog(id,user.Id);err!=nil{
@@ -127,7 +127,7 @@ func UpdateBlogById(ctx *gin.Context){
 		Type:form.Type,
 		AccessLimit:form.AccessLimit,
 	}
-    err=model.Update(&blog,id,[]string{"title","intro","category_name",
+    err=model.UpdateColumns(&blog,id,[]string{"title","intro","category_name",
     "category_id","tags","cover","content","type","access_limit"})
 	if err!=nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
@@ -145,24 +145,18 @@ func CreateBlog(ctx *gin.Context){
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "数据错误"})
 		return
 	}
-	hasLogin,err:=hasUserLogin(ctx)
-	if err!=nil{
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
-		return
-	}
-	if !hasLogin{
-		ctx.JSON(http.StatusForbidden, gin.H{"error": "请先登录"})
-		return
-	}
 	user,err:=getUser(ctx)
 	if err!=nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
+	if user.Id<=0{
+		ctx.JSON(http.StatusForbidden, gin.H{"error": "请先登录"})
+		return
+	}
 	blog:=model.Blog{
 		UserId:user.Id,
 		Username:user.Username,
-		Avatar:user.Avatar,
 		Title:form.Title,
 		Intro:form.Intro,
 		CategoryName:form.CategoryName,

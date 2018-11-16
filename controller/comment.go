@@ -9,7 +9,7 @@ import (
 )
 
 type CommentForm struct {
-	BlogId       int64  `sql:"b_id" json:"blog_id"`
+	BlogId       int64  `form:"b_id" json:"blog_id" binding:"required"`
 	Content      map[string]interface{} `form:"content" json:"content" binding:"required"`
 	Type         int8  `form:"type" json:"type" binding:"required"`  //类型
 	ReplyId       int64 `form:"reply_u_id" json:"reply_id"`
@@ -18,19 +18,10 @@ type CommentForm struct {
 
 //创建blog
 func CreateComment(ctx *gin.Context){
-	var form BlogForm
+	var form CommentForm
 	// This will infer what binder to use depending on the content-type header.
 	if err := ctx.ShouldBind(&form); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "数据错误"})
-		return
-	}
-	hasLogin,err:=hasUserLogin(ctx)
-	if err!=nil{
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
-		return
-	}
-	if !hasLogin{
-		ctx.JSON(http.StatusForbidden, gin.H{"error": "请先登录"})
 		return
 	}
 	user,err:=getUser(ctx)
@@ -38,27 +29,26 @@ func CreateComment(ctx *gin.Context){
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
-	blog:=model.Blog{
+    if user.Id<=0{
+		ctx.JSON(http.StatusForbidden, gin.H{"error": "请先登录"})
+		return
+	}
+	comment:=model.Comment{
 		UserId:user.Id,
 		Username:user.Username,
-		Avatar:user.Avatar,
-		Title:form.Title,
-		Intro:form.Intro,
-		CategoryName:form.CategoryName,
-		CategoryId:form.CategoryId,
-		Tags:form.Tags,
-		Cover:form.Cover,
+		BlogId:form.BlogId,
 		Content:form.Content,
 		Type:form.Type,
-		AccessLimit:form.AccessLimit,
+		ReplyId:form.ReplyId,
+		ReplyUsername:form.ReplyUsername,
 		CreateDate:time.Now(),
 	}
-	err=model.Save(&blog)
+	err=model.Save(&comment)
 	if err!=nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
-	ctx.JSON(http.StatusOK, blog)
+	ctx.JSON(http.StatusOK, comment)
 	return
 }
 
@@ -75,6 +65,12 @@ func DeleteCommentById(ctx *gin.Context){
 		ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})
 		return
 	}
+	if user.Id<=0{
+		ctx.JSON(http.StatusForbidden,gin.H{"error":"请先登录"})
+		return
+	}
+	//TODO:如果是管理员，也可以删除
+
 	err=new(model.Blog).Delete(id,user.Id)
 	if err!=nil{
 		ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})

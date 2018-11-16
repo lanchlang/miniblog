@@ -8,27 +8,35 @@ import (
 
 type Blog struct {
 	tableName struct{} `sql:"t_blog"`
-	Id           int64 `sql:"id,pk" json:"id"`
-	UserId       int64 `sql:"u_id" json:"user_id"`
-	Username     string `sql:"u_name" json:"username"`
-	Title        string `sql:"title" json:"title"`
-	CreateDate   time.Time `sql:"date_create" json:"create_date"`
-	CommentCnt   int `sql:"comment_cnt" json:"comment_cnt"`
-	LikeCnt      int `sql:"like_cnt" json:"like_cnt"`
-	Intro        string `sql:"intro" json:"introduce"`
-	CategoryName string  `sql:"c_name" json:"category_name"`
-	CategoryId   int64   `sql:"c_id" json:"category_id"`
-	Tags         []string `pg:"tags,array"`
-	Referer      string  `sql:"referer" json:"referer"`
-	Cover        map[string]interface{} `sql:"cover" json:"cover"`
-	Content      map[string]interface{} `sql:"content" json:"content"`
-	UpdateDate   time.Time  `sql:"date_last_update" json:"update_date"`
-	Type         int8 `sql:"type" json:"type"`   //类型
-	AccessLimit  int  `sql:"access_limit" json:"access_limit"`  //限制访问级别
-	ViewCnt     int   `sql:"view_cnt" json:"view_cnt"`//访问次数
-	Deleted      int8  `sql:"deleted" json:"deleted"`   //deleted大于0，则表示已经删除
+	Id           int64 `sql:"id,pk" json:"id" form:"id"`
+	UserId       int64 `sql:"u_id" json:"user_id" form:"user_id"`
+	Username     string `sql:"u_name" json:"username" form:"username"`
+	Title        string `sql:"title" json:"title" form:"title"`
+	CreateDate   time.Time `sql:"date_create" json:"create_date" form:"create_date"`
+	CommentCnt   int `sql:"comment_cnt" json:"comment_cnt" form:"comment_cnt"`
+	LikeCnt      int `sql:"like_cnt" json:"like_cnt" form:"like_cnt"`
+	Intro        string `sql:"intro" json:"introduce" form:"introduce"`
+	CategoryName string  `sql:"c_name" json:"category_name" form:"category_name"`
+	CategoryId   int64   `sql:"c_id" json:"category_id" form:"category_id"`
+	Tags         []string `pg:"tags,array" json:"tags" form:"tags"`
+	Referer      string  `sql:"referer" json:"referer" form:"referer"`
+	Cover        map[string]interface{} `sql:"cover" json:"cover" form:"cover"`
+	Content      map[string]interface{} `sql:"content" json:"content" form:"content"`
+	UpdateDate   time.Time  `sql:"date_last_update" json:"update_date" form:"update_date"`
+	Type         int8 `sql:"type" json:"type" form:"type"`   //类型
+	AccessLimit  int  `sql:"access_limit" json:"access_limit" form:"access_limit"`  //限制访问级别
+	ViewCnt     int   `sql:"view_cnt" json:"view_cnt" form:"view_cnt"`//访问次数
+	Deleted      int8  `sql:"deleted" json:"deleted" form:"deleted"`   //deleted大于0，则表示已经删除
 }
 
+func NewBlog()interface{}{
+	return new(Blog)
+}
+
+func NewBlogList()interface{}{
+	var list []Blog
+	return &list
+}
 //获取在某个时间节点以后创建的blog
 //输入为time.Time
 //输出为int(数量),error

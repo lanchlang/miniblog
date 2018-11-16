@@ -2,11 +2,20 @@ package model
 
 type Category struct {
 	tableName struct{} `sql:"t_category"`
-	Id          int `sql:"id,pk" json:"id"`
-	Name        string `sql:"name" json:"name"`
-	ParentId    int `sql:"p_id" json:"parent_id"`
-	ParentName  string `sql:"p_name" json:"parent_name"`
+	Id          int `sql:"id,pk" json:"id" form:"id"`
+	Name        string `sql:"name" json:"name" form:"name"`
+	ParentId    int `sql:"p_id" json:"parent_id" form:"parent_id"`
+	ParentName  string `sql:"p_name" json:"parent_name" form:"parent_name"`
 }
+func NewCategory()interface{}{
+	return new(Category)
+}
+
+func NewCategoryList()interface{}{
+	var list []Category
+	return &list
+}
+
 //获取category的总量
 func (model *Category) TotalCount() (int,error) {
 	session := GetSession()

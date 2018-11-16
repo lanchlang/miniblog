@@ -9,13 +9,22 @@ import (
 
 type User struct {
 	tableName struct{} `sql:"t_users"`
-	Id          int64  `sql:"id,pk" json:"id"`
-	Username    string `sql:"username" json:"username"`
+	Id          int64  `sql:"id,pk" json:"id" form:"id"`
+	Username    string `sql:"username" json:"username" form:"username"`
 	Password    string `sql:"password" json:"-"`
-	Email       string `sql:"email" json:"email"`
-	Phone       string `sql:"phone" json:"phone"`
-	CreateDate time.Time `sql:"date_create" json:"create_date"`
-	LastLogin   time.Time `sql:"last_login" json:"last_login"`
+	Email       string `sql:"email" json:"email" form:"email"`
+	Phone       string `sql:"phone" json:"phone" form:"phone"`
+	CreateDate  time.Time `sql:"date_create" json:"create_date" form:"create_date"`
+	LastLogin   time.Time `sql:"last_login" json:"last_login" form:"last_login"`
+}
+
+func NewUser()interface{}{
+	return new(User)
+}
+
+func NewUserList()interface{}{
+	var list []User
+	return &list
 }
 
 func (user *User) BeforeInsert(db orm.DB)  {

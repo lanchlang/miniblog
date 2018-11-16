@@ -1,3 +1,36 @@
+PUT http://localhost:8080/api/admin/v1/departments/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "id":1,   "name":"ddd" }
+
+<> 2018-11-16T035353.200.json
+
+###
+
+PUT http://localhost:8080/api/admin/v1/departments/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "id":1,   "name":"ddd" }
+
+<> 2018-11-16T034744.200.json
+
+###
+
+PUT http://localhost:8080/api/admin/v1/departments/
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "id":1,   "name":"ddd" }
+
+<> 2018-11-16T034713.404.txt
+
+###
+
 PUT http://localhost:8080/api/v1/posts/1
 Accept: */*
 Cache-Control: no-cache
