@@ -10,14 +10,12 @@ type Comment struct {
 	Id           int64 `sql:"id,pk" json:"id"`
 	UserId       int64 `sql:"u_id" json:"user_id"`
 	Username     string `sql:"u_name" json:"username"`
-	Avatar       map[string]interface{} `sql:"u_avatar" json:"avatar"`
 	BlogId       int64  `sql:"b_id" json:"blog_id"`
 	Content      map[string]interface{} `sql:"content" json:"content"`
 	CreateDate   time.Time  `sql:"date" json:"create_date"`
 	Type         int8  `sql:"type" json:"type"`  //类型
 	ReplyId       int64 `sql:"reply_u_id" json:"reply_id"`
 	ReplyUsername     string `sql:"reply_u_name" json:"reply_username"`
-	ReplyAvatar       map[string]interface{} `sql:"reply_u_avatar" json:"reply_avatar"`
 	Deleted       int8  `sql:"deleted" json:"deleted"`   //deleted大于0，则表示已经删除
 }
 

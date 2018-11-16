@@ -16,7 +16,6 @@ type User struct {
 	Phone       string `sql:"phone" json:"phone"`
 	CreateDate time.Time `sql:"date_create" json:"create_date"`
 	LastLogin   time.Time `sql:"last_login" json:"last_login"`
-	Avatar      map[string]interface{} `sql:"avatar" json:"avatar"`//缩略图
 }
 
 func (user *User) BeforeInsert(db orm.DB)  {

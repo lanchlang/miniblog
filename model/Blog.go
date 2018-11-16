@@ -12,7 +12,6 @@ type Blog struct {
 	UserId       int64 `sql:"u_id" json:"user_id"`
 	Username     string `sql:"u_name" json:"username"`
 	Title        string `sql:"title" json:"title"`
-	Avatar       map[string]interface{} `sql:"u_avatar" json:"avatar"`
 	CreateDate   time.Time `sql:"date_create" json:"create_date"`
 	CommentCnt   int `sql:"comment_cnt" json:"comment_cnt"`
 	LikeCnt      int `sql:"like_cnt" json:"like_cnt"`
