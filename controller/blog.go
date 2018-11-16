@@ -205,7 +205,7 @@ func SearchBlog(ctx *gin.Context){
 		}
 	}
     //
-    blogs,err:=new(model.Blog).SearchPublicBlog(query,lastId,config.Default_List_Size)
+    blogs,err:=new(model.Blog).SearchPublicBlog(query,lastId,config.DefaultConfig.DefaultListSize)
 	if err!=nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
@@ -242,7 +242,7 @@ func ListBlog(ctx *gin.Context){
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
 			return
 		}
-		blogs,err:=new(model.Blog).GetPublicBlogByCategory(categoryId,lastId,config.Default_List_Size)
+		blogs,err:=new(model.Blog).GetPublicBlogByCategory(categoryId,lastId,config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
@@ -259,7 +259,7 @@ func ListBlog(ctx *gin.Context){
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
 			return
 		}
-		blogs,err:=new(model.Blog).GetPublicBlogByPopular(int(popularOffset),config.Default_List_Size)
+		blogs,err:=new(model.Blog).GetPublicBlogByPopular(int(popularOffset),config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
@@ -276,7 +276,7 @@ func ListBlog(ctx *gin.Context){
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
 			return
 		}
-		blogs,err:=new(model.Blog).GetPublicBlogByLike(int(likeOffset),config.Default_List_Size)
+		blogs,err:=new(model.Blog).GetPublicBlogByLike(int(likeOffset),config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
@@ -288,7 +288,7 @@ func ListBlog(ctx *gin.Context){
 	//是否为空
 	if !util.IsEmptyString(likeOffsetStr){
 		var err error
-		blogs,err:=new(model.Blog).GetPublicBlogByTag(tag,lastId,config.Default_List_Size)
+		blogs,err:=new(model.Blog).GetPublicBlogByTag(tag,lastId,config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
@@ -296,7 +296,7 @@ func ListBlog(ctx *gin.Context){
 		ctx.JSON(http.StatusOK, blogs)
 	}
 	//获取默认列表，根据创建日期（id）
-	blogs,err:=new(model.Blog).GetPublicBlogByCreateDate(lastId,config.Default_List_Size)
+	blogs,err:=new(model.Blog).GetPublicBlogByCreateDate(lastId,config.DefaultConfig.DefaultListSize)
 	if err!=nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return

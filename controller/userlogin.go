@@ -292,7 +292,7 @@ func SendCaptchaToPhone(ctx *gin.Context) {
 
 //发送手机验证码
 func sendMessageCaptcha(phone string, captcha string) error {
-	var aliConfig config.Config
+	var aliConfig config.AliConfig
 	if err := util.LoadConfig("config/aliyun_message_config.json", &aliConfig); err != nil {
 		return err
 	}

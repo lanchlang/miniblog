@@ -14,7 +14,7 @@ type SingleCallByTTSConfig struct {
 	TemplateParam    string `json:"template_param"`
 }
 
-type Config struct {
+type AliConfig struct {
 	AccessKeyID     string                `json:"access_key_id"`
 	AccessKeySecret string                `json:"access_key_secret"`
 	SMS             SMSConfig             `json:"sms"`

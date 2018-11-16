@@ -53,6 +53,7 @@ func main() {
 		{
 			//增删改查，列表
 			apiBlogs.GET("/:id",controller.GetBlogById)
+			apiBlogs.GET("/:id/comments",controller.ListCommentByBlog)//获取博客的评论
 			apiBlogs.GET("/:id/like",controller.LikeBlogById)
 			apiBlogs.GET("/:id/unlike",controller.UnLikeBlogById)
 			apiBlogs.DELETE("/:id",controller.DeleteBlogById)

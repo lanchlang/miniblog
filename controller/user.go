@@ -34,7 +34,7 @@ func GetListBlogByUser(ctx *gin.Context){
 		return
 	}
 	if user.Id<=0{
-		blogs,err:=new(model.Blog).GetPublicBlogByUser(userId,lastId,config.Default_List_Size)
+		blogs,err:=new(model.Blog).GetPublicBlogByUser(userId,lastId,config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
@@ -44,7 +44,7 @@ func GetListBlogByUser(ctx *gin.Context){
 	}
 	//TODO:如果是管理员，也可以获取所有的blogs
 	if user.Id==userId{
-		blogs,err:=new(model.Blog).GetAllBlogByUser(userId,lastId,config.Default_List_Size)
+		blogs,err:=new(model.Blog).GetAllBlogByUser(userId,lastId,config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
