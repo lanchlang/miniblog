@@ -52,11 +52,14 @@ func main() {
 		{
 			//增删改查，列表
 			apiBlogs.GET("/:id",controller.GetBlogById)
+			apiBlogs.GET("/:id/like",controller.LikeBlogById)
+			apiBlogs.GET("/:id/unlike",controller.UnLikeBlogById)
 			apiBlogs.DELETE("/:id",controller.DeleteBlogById)
 			apiBlogs.PUT("/:id",controller.UpdateBlogById)
 			apiBlogs.POST("/",controller.CreateBlog)
 			apiBlogs.POST("/search",controller.SearchBlog)
-			apiBlogs.GET("/",controller.ListBlog)
+			apiBlogs.POST("/ids",controller.GetListBlogByIds)
+			apiBlogs.GET("/",controller.ListBlog) //通过参数获取列表
 		}
 
 	}

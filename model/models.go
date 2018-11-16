@@ -133,10 +133,10 @@ func Count(model interface{}) (int,error) {
 //输入为models，查询关键字，查询的值，lastId,num
 //输出为error
 //查询结果集直接放到models中
-func Search(key string,query string,lastId int,num int,models interface{}) error{
+func Search(models interface{},key string,query string,lastId int64,num int) error{
 	session := GetSession()
 	defer session.Close()
-	err := session.Model(models).Where(key+` like ? and id<?`,"%"+query+"%",lastId).Limit(num).Select()
+	err := session.Model(models).Where(key+` like ? and id<?`,"%"+query+"%",lastId).Order("id desc").Limit(num).Select()
 	return err
 }
 

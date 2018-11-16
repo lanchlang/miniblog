@@ -368,11 +368,11 @@ func (blog *Blog) SearchPublicBlog(query string,lastBlogId int64,num int) ([]Blo
 	}
 }
 //每次访问，都将增加一次view
-func (model *Blog) Visit() ( error) {
+func (model *Blog) Visit(id int64) ( error) {
 	session := GetSession()
 	defer session.Close()
 	_, err := session.Model(model).Set("view_cnt=view_cnt+1").
-		Where("id = ?", model.Id).Update()
+		Where("id = ?", id).Update()
 	if err != nil {
 		print(err.Error())
 		return err
@@ -380,7 +380,40 @@ func (model *Blog) Visit() ( error) {
 	return nil
 
 }
-
+//点赞
+func (model *Blog) Like(userId,id int64) ( error) {
+	session := GetSession()
+	defer session.Close()
+	_, err := session.Model(model).Set("like_cnt=like_cnt+1").
+		Where("id = ?", id).Update()
+	if err != nil {
+		return err
+	}
+	_, err = session.Model(new(User)).Exec("UPDATE t_users SET likes = array_append(likes,?::BIGINT) WHERE id=? AND (?!=ALL(likes))", id, userId, id)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
+	return nil
+}
+//取消点赞
+func (model *Blog) UnLike(userId,id int64) ( error) {
+	session := GetSession()
+	defer session.Close()
+	_, err := session.Model(model).Set("like_cnt=like_cnt-1").
+		Where("id = ?", id).Update()
+	if err != nil {
+		return err
+	}
+	_, err = session.Model(model).Exec("UPDATE t_users SET likes = array_remove(likes,?::BIGINT) WHERE id=?", id, userId)
+	if err != nil {
+		return err
+	} else {
+		return nil
+	}
+	return nil
+}
 //判断用户是否为blog创建者
 func (model *Blog) IsCreatorOfBlog(id int64,userId int64)(bool,error){
 	session := GetSession()

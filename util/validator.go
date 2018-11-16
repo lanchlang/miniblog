@@ -11,3 +11,7 @@ func PhoneValid(phone string) (bool,error) {
 func UsernameValid(username string) (bool,error) {
 	return regexp.MatchString("^[a-zA-Z0-9\u4E00-\u9FFF]{1,20}$",username)
 }
+
+func IsEmptyString(str string) bool{
+	return len(str)==0
+}
