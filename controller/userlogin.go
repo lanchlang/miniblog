@@ -293,7 +293,7 @@ func SendCaptchaToPhone(ctx *gin.Context) {
 //发送手机验证码
 func sendMessageCaptcha(phone string, captcha string) error {
 	var aliConfig config.Config
-	if err := config.LoadConfig("config/aliyun_message_config.json", &aliConfig); err != nil {
+	if err := util.LoadConfig("config/aliyun_message_config.json", &aliConfig); err != nil {
 		return err
 	}
 	param := "{\"code\":\"" + captcha + "\"}"

@@ -175,12 +175,3 @@ func GetListByKey(models interface{},key string,value interface{}) error{
 	err := session.Model(models).Where(key+"=?",value).Select()
 	return err
 }
-
-//更新某条记录
-//输入为model
-//输出为error
-func Update(model interface{})(error){
-	session := GetSession()
-	defer session.Close()
-	return session.Update(model)
-}

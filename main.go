@@ -69,6 +69,7 @@ func main() {
         	apiComments.DELETE("/:id",controller.DeleteCommentById)
 		}
 	}
+	//管理接口
 	adminApi:=router.Group("/api/admin/v1")
 	{
 		//部门接口
@@ -81,35 +82,74 @@ func main() {
 			//创建
 			adminApiDepartment.POST("/",admincontroller.BuildCreate(model.NewDepartment))
 			//更新
-			adminApiDepartment.PUT("/:id",admincontroller.BuildCreate(model.NewDepartment))
+			adminApiDepartment.PUT("/:id",admincontroller.BuildUpdate(model.NewDepartment,[]string{"name"}))
 			//删除
-			adminApiDepartment.DELETE("/:id",admincontroller.BuildCreate(model.NewDepartment))
+			adminApiDepartment.DELETE("/:id",admincontroller.BuildDelete(model.NewDepartment))
 		}
 		////权限接口
-		//adminApiAuthority:=adminApi.Group("/auths")
-		//{
-		//
-		//}
+		adminApiAuthority:=adminApi.Group("/auths")
+		{
+			//列表
+			adminApiAuthority.GET("/",admincontroller.BuildList(model.NewAuthorityList))
+			//单个
+			adminApiAuthority.GET("/:id",admincontroller.BuildGet(model.NewAuthority))
+			//创建
+			adminApiAuthority.POST("/",admincontroller.BuildCreate(model.NewAuthority))
+			//更新
+			adminApiAuthority.PUT("/:id",admincontroller.BuildUpdate(model.NewAuthority,[]string{"name","department_id"}))
+			//删除
+			adminApiAuthority.DELETE("/:id",admincontroller.BuildDelete(model.NewAuthority))
+		}
 		////角色接口
-		//adminApiRole:=adminApi.Group("/roles")
-		//{
-		//
-		//}
-		////用户接口
-		//adminApiUsers:=adminApi.Group("/users")
-		//{
-		//
-		//}
-		////blog接口
-		//adminApiBlogs:=adminApi.Group("/blogs")
-		//{
-		//
-		//}
-		////comment接口
-		//adminApiComments:=adminApi.Group("/comments")
-		//{
-		//
-		//}
+		adminApiRole:=adminApi.Group("/roles")
+		{
+			//列表
+			adminApiRole.GET("/",admincontroller.BuildList(model.NewRoleList))
+			//单个
+			adminApiRole.GET("/:id",admincontroller.BuildGet(model.NewRole))
+			//创建
+			adminApiRole.POST("/",admincontroller.BuildCreate(model.NewRole))
+			//更新
+			adminApiRole.PUT("/:id",admincontroller.BuildUpdate(model.NewRole,[]string{"name","auths"}))
+			//删除
+			adminApiRole.DELETE("/:id",admincontroller.BuildDelete(model.NewRole))
+		}
+		//用户接口
+		adminApiUsers:=adminApi.Group("/users")
+		{
+			//列表
+			adminApiUsers.GET("/",admincontroller.BuildList(model.NewUserList))
+			//单个
+			adminApiUsers.GET("/:id",admincontroller.BuildGet(model.NewUser))
+			//创建
+			adminApiUsers.POST("/",admincontroller.BuildCreate(model.NewUser))
+			//更新
+			adminApiUsers.PUT("/:id",admincontroller.BuildUpdate(model.NewUser,[]string{"access_level"}))
+			//删除
+			adminApiUsers.DELETE("/:id",admincontroller.BuildDelete(model.NewRole))
+		}
+		//blog接口
+		adminApiBlogs:=adminApi.Group("/blogs")
+		{
+			//列表
+			adminApiBlogs.GET("/",admincontroller.BuildList(model.NewBlogList))
+			//单个
+			adminApiBlogs.GET("/:id",admincontroller.BuildGet(model.NewBlog))
+			//创建
+			adminApiBlogs.POST("/",admincontroller.BuildCreate(model.NewBlog))
+			//更新
+			adminApiBlogs.PUT("/:id",admincontroller.BuildUpdate(model.NewBlog,[]string{"access_limit"}))
+			//删除
+			adminApiBlogs.DELETE("/:id",admincontroller.BuildDelete(model.NewBlog))
+		}
+		//comment接口
+		adminApiComments:=adminApi.Group("/comments")
+		{
+			//列表
+			adminApiComments.GET("/",admincontroller.BuildList(model.NewCommentList))
+			//删除
+			adminApiComments.DELETE("/:id",admincontroller.BuildDelete(model.NewBlog))
+		}
 	}
 	//验证通过邮箱发送的重置密码的链接
 	router.GET("/verify_reset_password_link_through_email",controller.VerifyResetPasswordLinkThroughEmail)

@@ -99,8 +99,8 @@
       <ObjectId>2200</ObjectId>
       <Comment>standard public schema</Comment>
       <Owner>postgres</Owner>
-      <IntrospectionTimestamp>2018-11-16.14:01:56.561</IntrospectionTimestamp>
-      <IntrospectionStateNumber>726</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2018-11-16.16:26:05.645</IntrospectionTimestamp>
+      <IntrospectionStateNumber>739</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -262,7 +262,7 @@
     <table id="42" parent="19" name="t_users">
       <ObjectId>16440</ObjectId>
       <Owner>wanglang</Owner>
-      <StateNumber>721</StateNumber>
+      <StateNumber>739</StateNumber>
     </table>
     <column id="43" parent="34" name="id">
       <Position>1</Position>
@@ -793,27 +793,34 @@
       <DefaultExpression>&apos;{}&apos;::bigint[]</DefaultExpression>
       <TypeId>1016</TypeId>
     </column>
-    <index id="123" parent="42" name="t_users_pkey">
+    <column id="123" parent="42" name="access_level">
+      <Position>11</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>739</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="124" parent="42" name="t_users_pkey">
       <ObjectId>16447</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="124" parent="42" name="t_users_username_uindex">
+    <index id="125" parent="42" name="t_users_username_uindex">
       <ObjectId>16449</ObjectId>
       <ColNames>username</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="125" parent="42" name="t_users_phone_uindex">
+    <index id="126" parent="42" name="t_users_phone_uindex">
       <ObjectId>16450</ObjectId>
       <ColNames>phone</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="126" parent="42" name="t_users_email_uindex">
+    <index id="127" parent="42" name="t_users_email_uindex">
       <ObjectId>16451</ObjectId>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="127" parent="42" name="t_users_pkey">
+    <key id="128" parent="42" name="t_users_pkey">
       <ObjectId>16448</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>t_users_pkey</UnderlyingIndexName>

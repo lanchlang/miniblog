@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"miniblog/config"
 	"miniblog/model"
+	"miniblog/util"
 	"net/http"
 	"strconv"
 )
@@ -49,14 +50,18 @@ func BuildDelete(instanceBuilder func() interface{}) func(ctx *gin.Context)  {
 //获取列表
 func BuildList(instanceBuilder func() interface{}) func(ctx *gin.Context)  {
 	return func (ctx *gin.Context){
+		offset:=int64(0)
 		offsetStr:=ctx.Query("offset")
-		offset,err:=strconv.ParseInt(offsetStr,10,64)
-		if err!=nil{
-			ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})
-			return
+		if !util.IsEmptyString(offsetStr){
+			var err error
+			offset,err=strconv.ParseInt(offsetStr,10,64)
+			if err!=nil{
+				ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})
+				return
+			}
 		}
 		instances:=instanceBuilder()
-		err=model.List(instances,int(offset),config.Default_List_Size)
+		err:=model.List(instances,int(offset),config.Default_List_Size)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError,gin.H{"error":"暂时不能服务"})
 			return
@@ -67,15 +72,21 @@ func BuildList(instanceBuilder func() interface{}) func(ctx *gin.Context)  {
 }
 
 //更新
-func BuildUpdate(instanceBuilder func() interface{}) func(ctx *gin.Context)  {
+func BuildUpdate(instanceBuilder func() interface{},columns []string) func(ctx *gin.Context)  {
 	return func (ctx *gin.Context){
+		idStr:=ctx.Param("id")
+		id,err:=strconv.ParseInt(idStr,10,64)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})
+			return
+		}
 		instance:=instanceBuilder()
 		// This will infer what binder to use depending on the content-type header.
 		if err := ctx.ShouldBindJSON(instance); err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "数据错误"})
 			return
 		}
-        err:=model.Update(instance)
+        err=model.UpdateColumns(instance,id,columns)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return

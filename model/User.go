@@ -16,6 +16,8 @@ type User struct {
 	Phone       string `sql:"phone" json:"phone" form:"phone"`
 	CreateDate  time.Time `sql:"date_create" json:"create_date" form:"create_date"`
 	LastLogin   time.Time `sql:"last_login" json:"last_login" form:"last_login"`
+	Likes       []int64 `pg:"likes,array" json:"likes" form:"likes"`
+	AccessLevel int     `sql:"access_level" json:"access_level" form:"access_level"`
 }
 
 func NewUser()interface{}{
