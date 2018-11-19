@@ -71,8 +71,16 @@ func DeleteCommentById(ctx *gin.Context){
 		ctx.JSON(http.StatusForbidden,gin.H{"error":"请先登录"})
 		return
 	}
-	//TODO:如果是管理员，也可以删除
-
+	//如果是管理员，也可以删除
+    if user.AccessLevel>=config.DefaultConfig.CommentAdminAccessLevel{
+    	err=model.Delete(new(model.Comment),id)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})
+			return
+		}
+		ctx.JSON(http.StatusOK,gin.H{"message":"您已经成功删除"})
+		return
+	}
 	err=new(model.Blog).Delete(id,user.Id)
 	if err!=nil{
 		ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})

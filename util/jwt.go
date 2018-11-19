@@ -25,6 +25,7 @@ func GenToken(expiresDuration int64,subject string) (string,error) {
 }
 
 
+
 // 获取token
 func GetToken(tokenStr string) (*jwt.Token,error) {
 	token, err := jwt.ParseWithClaims(tokenStr,&jwt.StandardClaims{}, func(*jwt.Token) (interface{}, error) {
@@ -41,6 +42,10 @@ func GetClaims(tokenStr string) (*jwt.StandardClaims,error) {
 	if err!=nil{
 		return nil,err
 	}
+	if !token.Valid{
+		return nil,errors.New("非法claims")
+	}
+
 	if claims,ok:= token.Claims.(*jwt.StandardClaims);ok{
 		return claims,nil
 	}

@@ -61,7 +61,7 @@ func BuildList(instanceBuilder func() interface{}) func(ctx *gin.Context)  {
 			}
 		}
 		instances:=instanceBuilder()
-		err:=model.List(instances,int(offset),config.Default_List_Size)
+		err:=model.List(instances,int(offset),config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError,gin.H{"error":"暂时不能服务"})
 			return

@@ -19,7 +19,7 @@ import (
 //用户名是否存在
 //用户名长度在1到20之间
 type UsernameExistForm struct {
-	Username string `validate:"min=1,max=20,regexp=^[a-zA-Z0-9\u4E00-\u9FFF]*$"`
+	Username string `validate:"min=1,max=20,regexp=^[a-zA-Z0-9\\u4E00-\\u9FFF]*$"`
 }
 
 func UsernameExist(ctx *gin.Context) {
@@ -42,7 +42,7 @@ func UsernameExist(ctx *gin.Context) {
 }
 
 type EmailExistForm struct {
-	Email string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2,4})$"`
+	Email string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2\\,4})$"`
 }
 
 //邮箱是否存在
@@ -104,8 +104,8 @@ func VerifyCaptcha(ctx *gin.Context) {
 
 type RegisterWithEmailForm struct {
 	Username string `validate:"min=1,max=20,regexp=^[a-zA-Z0-9\u4E00-\u9FFF]*$"`
-	Email    string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2,4})$"`
-	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+	Email    string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2\\,4})$"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8\\,20}"`
 }
 
 //使用邮箱注册
@@ -211,20 +211,27 @@ func VerifyRegisterThroughEmail(ctx *gin.Context) {
 	}
 	//保存到主表中
 	now := time.Now()
-	user := &model.User{
+	user := model.User{
 		Username:   emailRegisterUser.Username,
 		Password:   emailRegisterUser.Password,
 		Email:      emailRegisterUser.Email,
 		CreateDate: now,
 		LastLogin:  now,
+		AccessLevel:config.DefaultConfig.DefaultUserAccessLevel,
 	}
-	err = model.Save(user)
+	err = model.Save(&user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
-	//成功之后，返回
-	ctx.JSON(http.StatusOK, user)
+	//设置jwt_header
+    err=SetJwtHeader(ctx,user)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+    //跳转到首页
+    ctx.Redirect(http.StatusFound,"/")
 }
 
 type PhoneExistForm struct {
@@ -293,7 +300,7 @@ func SendCaptchaToPhone(ctx *gin.Context) {
 //发送手机验证码
 func sendMessageCaptcha(phone string, captcha string) error {
 	var aliConfig config.AliConfig
-	if err := util.LoadConfig("config/aliyun_message_config.json", &aliConfig); err != nil {
+	if err := config.LoadConfig("config/aliyun_message_config.json", &aliConfig); err != nil {
 		return err
 	}
 	param := "{\"code\":\"" + captcha + "\"}"
@@ -318,7 +325,7 @@ func sendMessageCaptcha(phone string, captcha string) error {
 //验证验证码和手机号码是否匹配或过期
 type VerifyPhoneCaptchaForm struct {
 	Phone   string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
-	Captcha string `validate:"min=4,max=9,regexp=^\\d{4,9}$"`
+	Captcha string `validate:"min=4,max=9,regexp=^\\d{4\\,9}$"`
 }
 
 //验证手机及其验证码
@@ -363,7 +370,7 @@ func VerifyPhoneCaptcha(ctx *gin.Context) {
 type RegisterWithPhoneForm struct {
 	Username string `validate:"min=1,max=20,regexp=^[a-zA-Z0-9\u4E00-\u9FFF]*$"`
 	Phone    string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
-	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8\\,20}"`
 }
 
 func RegisterWithPhone(ctx *gin.Context) {
@@ -396,20 +403,27 @@ func RegisterWithPhone(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"exist": true, "message": "电话已经存在，请通过电话重置密码"})
 		return
 	}
-	//将用户信息插入待验证的表中
-	user := &model.User{
+	//将用户信息插入表中
+	user := model.User{
 		Username:   username,
 		Phone:      phone,
 		Password:   util.Hash(password),
 		CreateDate: time.Now(),
 		LastLogin:  time.Now(),
+		AccessLevel: config.DefaultConfig.BlogAdminAccessLevel,
 	}
-	err = model.Save(user)
+	err = model.Save(&user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
+	//
 	//返回，并返回用户信息
+	err=SetJwtHeader(ctx,user)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
 	ctx.JSON(http.StatusOK, gin.H{"message": "非常感谢您的注册！", "user": user})
 	return
 }
@@ -419,7 +433,7 @@ func RegisterWithPhone(ctx *gin.Context) {
 //2：向邮箱中发送重置密码链接（链接中包含有验证信息），将邮箱，验证信息，过期时间保存到邮箱重置密码验证表中
 //3：返回成功信息，并告知用户可以通过邮箱重置密码了
 type RequestResetPasswordThroughEmailForm struct {
-	Email string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2,4})$"`
+	Email string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2\\,4})$"`
 }
 
 func RequestResetPasswordThroughEmail(ctx *gin.Context) {
@@ -505,7 +519,7 @@ func VerifyResetPasswordLinkThroughEmail(ctx *gin.Context) {
 //1：验证一次性验证信息，如果失败，返回并告知原因
 //2：重置密码，并返回信息，并告知用户
 type ResetPasswordForm struct {
-	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8\\,20}"`
 	TokenStr string
 }
 
@@ -633,8 +647,8 @@ func RequestResetPasswordThroughPhone(ctx *gin.Context) {
 //4：加载用户信息，并返回
 //TODO:加载额外信息
 type LoginWithEmailAndPasswordForm struct {
-	Email    string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2,4})$"`
-	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+	Email    string `validate:"min=5,max=30,regexp=^([A-Za-z0-9])+@([A-Za-z0-9])+\\.([A-Za-z]{2\\,4})$"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8\\,20}"`
 }
 
 func LoginWithEmailAndPassword(ctx *gin.Context) {
@@ -669,6 +683,12 @@ func LoginWithEmailAndPassword(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "邮箱或者密码不正确"})
 		return
 	}
+	//设置jwt_header
+	err=SetJwtHeader(ctx,user)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
 	//加载用户信息，并返回
 	ctx.JSON(http.StatusOK, user)
 	return
@@ -684,7 +704,7 @@ func LoginWithEmailAndPassword(ctx *gin.Context) {
 //4：加载用户信息，并返回
 type LoginWithPhoneAndPasswordForm struct {
 	Phone    string `validate:"min=5,max=13,regexp=^1[34578]\\d{9}$"`
-	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8\\,20}"`
 }
 
 func LoginWithPhoneAndPassword(ctx *gin.Context) {
@@ -717,6 +737,12 @@ func LoginWithPhoneAndPassword(ctx *gin.Context) {
 	}
 	if user.Id <= 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "电话或者密码不正确"})
+		return
+	}
+	//设置jwt_header
+	err=SetJwtHeader(ctx,user)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
 	//加载用户信息，并返回
@@ -756,13 +782,19 @@ func LoginWithPhoneAndCaptcha(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "验证码已超时"})
 		return
 	}
-	user := new(model.User)
-	if err := model.GetOneByKey(user, "phone", phone); err != nil {
+	user := model.User{}
+	if err := model.GetOneByKey(&user, "phone", phone); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
 	if user.Id <= 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "电话不存在，请先注册"})
+		return
+	}
+	//设置jwt_header
+	err:=SetJwtHeader(ctx,user)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
 	ctx.JSON(http.StatusOK, user)
@@ -775,8 +807,8 @@ func LoginWithPhoneAndCaptcha(ctx *gin.Context) {
 //3：校验用户名和密码如果不成功，返回结果并告知
 //4：加载用户信息，并返回
 type LoginWithUsernameAndPasswordForm struct {
-	Username string `validate:"min=1,max=20,^[a-zA-Z0-9\u4E00-\u9FFF]{1,20}$"`
-	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8,20}"`
+	Username string `validate:"min=1,max=20,regexp=^[a-zA-Z0-9]{1\\,20}$"`
+	Password string `validate:"min=8,max=20,regexp=^[A-Za-z0-9]{8\\,20}"`
 }
 
 func LoginWithUsernameAndPassword(ctx *gin.Context) {
@@ -809,6 +841,12 @@ func LoginWithUsernameAndPassword(ctx *gin.Context) {
 	}
 	if user.Id <= 0 {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "用户名或者密码不正确"})
+		return
+	}
+	//设置jwt_header
+	err=SetJwtHeader(ctx,user)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
 	//加载用户信息，并返回

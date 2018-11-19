@@ -30,8 +30,9 @@ func GetBlogById(ctx *gin.Context){
 			 ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			 return
 		 }
-     	 //TODO:访问控制,有权限的人员可以访问
-     	 if user.Id!=blog.UserId{
+
+     	 //访问控制,有权限的人员可以访问
+     	 if user.Id!=blog.UserId || user.AccessLevel<config.DefaultConfig.CommentAdminAccessLevel{
 			 ctx.JSON(http.StatusForbidden, gin.H{"error": "此文章暂时不对外开放"})
 			 return
 		 }
@@ -69,7 +70,15 @@ func DeleteBlogById(ctx *gin.Context){
 		ctx.JSON(http.StatusForbidden,gin.H{"error":"请先登录"})
 		return
 	}
-    //TODO:管理员也可以删除
+    //管理员删除博客
+    if user.AccessLevel>=config.DefaultConfig.BlogAdminAccessLevel{
+    	err=model.Delete(new(model.Blog),id)
+		if err!=nil{
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+	}
+
     err=new(model.Blog).Delete(id,user.Id)
 	if err!=nil{
 		ctx.JSON(http.StatusBadRequest,gin.H{"error":"参数错误"})
@@ -181,7 +190,7 @@ func CreateBlog(ctx *gin.Context){
 //通过blog的title进行搜索
 type SearchBlogForm struct {
 	Query    string `validate:"min=1,max=20"`
-	LastId   string `validate:"regexp=^[0-9]{0,20}$"`
+	LastId   string `validate:"regexp=^[0-9]{0\\,20}$"`
 }
 func SearchBlog(ctx *gin.Context){
     query:=ctx.PostForm("query")
@@ -392,12 +401,15 @@ func GetListBlogByIds(ctx *gin.Context){
 		ctx.JSON(http.StatusOK, publicBlogs)
 		return
 	}
-	//TODO:如果是管理员，则全部返回
-
-	//TODO:如果是登录用户，查看是否有权限，可以查看自己的blog
+	//T如果是管理员，则全部返回
+    if user.AccessLevel>=config.DefaultConfig.CommentAdminAccessLevel{
+    	ctx.JSON(http.StatusOK,blogs)
+		return
+	}
+	//如果是登录用户，查看是否有权限，可以查看自己的blog
 	var myBlogs=[]model.Blog{}
 	for _,blog:=range blogs{
-		if blog.AccessLimit<=0{
+		if blog.AccessLimit<=user.AccessLevel{
 			myBlogs=append(myBlogs,blog)
 		}else{
 			//如果是自己的blog

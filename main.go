@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 	"github.com/gin-gonic/gin"
 	"miniblog/admincontroller"
+	"miniblog/config"
 	"miniblog/controller"
 	"miniblog/middleware"
 	"miniblog/model"
@@ -21,32 +22,34 @@ func main() {
 	router.Use(middleware.GetLoginUser())
 	api:=router.Group("/api/v1")
 	{
+		//检查用户名，邮箱，电话是否存在
+		api.GET("/username_exist",controller.UsernameExist)
+		api.GET("/email_exist",controller.EmailExist)
+		api.GET("/phone_exist",controller.PhoneExist)
+		//用户通过email，phone，username，captcha登录
+		api.POST("/login/email",controller.LoginWithEmailAndPassword)
+		api.POST("/login/phone",controller.LoginWithPhoneAndPassword)
+		api.POST("/login/username",controller.LoginWithUsernameAndPassword)
+		api.POST("/login/captcha",controller.LoginWithPhoneAndCaptcha)
+		//用户注册
+		api.POST("/register/email",controller.RegisterWithEmail)
+		api.POST("/register/phone",controller.RegisterWithPhone)
+		//请求重置密码
+		api.POST("/forget/password/email",controller.RequestResetPasswordThroughEmail)
+		api.POST("/forget/password/phone",controller.RequestResetPasswordThroughPhone)
+		//重置密码
+		api.POST("/reset/password/",controller.ResetPassword)
+		//检测图形验证码
+		api.POST("/verify_captcha",controller.VerifyCaptcha)
+		//发送手机验证码
+		api.POST("/send_captcha_to_phone",controller.SendCaptchaToPhone)
+		//检测电话验证码
+		api.POST("/verify_phone_captcha",controller.VerifyPhoneCaptcha)
 		//用户接口
 		apiUsers := api.Group("/users")
 		{
-			//检查用户名，邮箱，电话是否存在
-			apiUsers.GET("/username_exist",controller.UsernameExist)
-			apiUsers.GET("/email_exist",controller.EmailExist)
-			apiUsers.GET("/phone_exist",controller.PhoneExist)
-			//用户通过email，phone，username，captcha登录
-			api.POST("/login/email",controller.LoginWithEmailAndPassword)
-			api.POST("/login/phone",controller.LoginWithPhoneAndPassword)
-			api.POST("/login/username",controller.LoginWithUsernameAndPassword)
-			api.POST("/login/captcha",controller.LoginWithPhoneAndCaptcha)
-			//用户注册
-			api.POST("/register/email",controller.RegisterWithEmail)
-			api.POST("/register/phone",controller.RegisterWithPhone)
-			//请求重置密码
-			api.POST("/forget/password/email",controller.RequestResetPasswordThroughEmail)
-			api.POST("/forget/password/phone",controller.RequestResetPasswordThroughPhone)
-			//重置密码
-			api.POST("/reset/password/",controller.ResetPassword)
-			//检测图形验证码
-			api.POST("/verify_captcha",controller.VerifyCaptcha)
-			//发送手机验证码
-			api.POST("/send_captcha_to_phone",controller.SendCaptchaToPhone)
-			//检测电话验证码
-			api.POST("/verify_phone_captcha",controller.VerifyPhoneCaptcha)
+			//获取用户的blogs
+			apiUsers.GET("/:id/blogs",controller.GetListBlogByUser)
 		}
 		//blog接口
 		apiBlogs := api.Group("/posts")
@@ -74,7 +77,7 @@ func main() {
 	adminApi:=router.Group("/api/admin/v1")
 	{
 		//部门接口
-		adminApiDepartment:=adminApi.Group("/departments")
+		adminApiDepartment:=adminApi.Group("/departments",middleware.BuildAccessLimitMiddleware(config.DefaultConfig.UserAdminAccessLevel))
 		{
 			//列表
 			adminApiDepartment.GET("/",admincontroller.BuildList(model.NewDepartmentList))
@@ -88,7 +91,7 @@ func main() {
 			adminApiDepartment.DELETE("/:id",admincontroller.BuildDelete(model.NewDepartment))
 		}
 		////权限接口
-		adminApiAuthority:=adminApi.Group("/auths")
+		adminApiAuthority:=adminApi.Group("/auths",middleware.BuildAccessLimitMiddleware(config.DefaultConfig.UserAdminAccessLevel))
 		{
 			//列表
 			adminApiAuthority.GET("/",admincontroller.BuildList(model.NewAuthorityList))
@@ -102,7 +105,7 @@ func main() {
 			adminApiAuthority.DELETE("/:id",admincontroller.BuildDelete(model.NewAuthority))
 		}
 		////角色接口
-		adminApiRole:=adminApi.Group("/roles")
+		adminApiRole:=adminApi.Group("/roles",middleware.BuildAccessLimitMiddleware(config.DefaultConfig.UserAdminAccessLevel))
 		{
 			//列表
 			adminApiRole.GET("/",admincontroller.BuildList(model.NewRoleList))
@@ -116,7 +119,7 @@ func main() {
 			adminApiRole.DELETE("/:id",admincontroller.BuildDelete(model.NewRole))
 		}
 		//用户接口
-		adminApiUsers:=adminApi.Group("/users")
+		adminApiUsers:=adminApi.Group("/users",middleware.BuildAccessLimitMiddleware(config.DefaultConfig.UserAdminAccessLevel))
 		{
 			//列表
 			adminApiUsers.GET("/",admincontroller.BuildList(model.NewUserList))
@@ -130,7 +133,7 @@ func main() {
 			adminApiUsers.DELETE("/:id",admincontroller.BuildDelete(model.NewRole))
 		}
 		//blog接口
-		adminApiBlogs:=adminApi.Group("/blogs")
+		adminApiBlogs:=adminApi.Group("/blogs",middleware.BuildAccessLimitMiddleware(config.DefaultConfig.BlogAdminAccessLevel))
 		{
 			//列表
 			adminApiBlogs.GET("/",admincontroller.BuildList(model.NewBlogList))
@@ -144,7 +147,7 @@ func main() {
 			adminApiBlogs.DELETE("/:id",admincontroller.BuildDelete(model.NewBlog))
 		}
 		//comment接口
-		adminApiComments:=adminApi.Group("/comments")
+		adminApiComments:=adminApi.Group("/comments",middleware.BuildAccessLimitMiddleware(config.DefaultConfig.CommentAdminAccessLevel))
 		{
 			//列表
 			adminApiComments.GET("/",admincontroller.BuildList(model.NewCommentList))

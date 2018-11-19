@@ -1,4 +1,9 @@
 {
   "default_list_size":20,
-  "jwt_token":"user_token"
+  "jwt_token":"user_token",
+  "user":"user",
+  "default_user_access_level":0,
+  "blog_access_level":1000,
+  "comment_access_level":2000,
+  "admin_access_level":3000
 }

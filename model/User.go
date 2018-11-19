@@ -7,6 +7,14 @@ import (
 	"time"
 )
 
+type SimpleUser struct{
+	Id int64 `json:"id"`
+	Username string `json:"username"`
+	Email string `json:"email"`
+	Phone string `json:"phone"`
+	AccessLevel int `json:"access_level"`
+}
+
 type User struct {
 	tableName struct{} `sql:"t_users"`
 	Id          int64  `sql:"id,pk" json:"id" form:"id"`
@@ -42,8 +50,8 @@ func (model *User) FindUserByUsernameAndPassword(username string, password strin
 	session := GetSession()
 	defer session.Close()
 	err := session.Model(model).Where("username=? and password=?", username, util.Hash(password)).Select()
-	if err != nil {
-		print(err.Error())
+	if err ==pg.ErrNoRows {
+		return nil
 	}
 	return err
 }
@@ -51,9 +59,7 @@ func (model *User) FindUserByEmailAndPassword(email string, password string) err
 	session := GetSession()
 	defer session.Close()
 	err := session.Model(model).Where("email=? and password=?", email, util.Hash(password)).Select()
-	if err ==pg.ErrNoRows {
-		return nil
-	}
+
 	return err
 }
 func (model *User) FindUserByPhoneAndPassword(phone string, password string) error {

@@ -42,8 +42,8 @@ func GetListBlogByUser(ctx *gin.Context){
 		ctx.JSON(http.StatusOK, blogs)
 		return
 	}
-	//TODO:如果是管理员，也可以获取所有的blogs
-	if user.Id==userId{
+	//如果是管理员或者是本人，可以获取所有的blogs
+	if user.Id==userId || user.AccessLevel>=config.DefaultConfig.CommentAdminAccessLevel{
 		blogs,err:=new(model.Blog).GetAllBlogByUser(userId,lastId,config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
