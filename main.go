@@ -39,6 +39,8 @@ func main() {
 		api.POST("/forget/password/phone",controller.RequestResetPasswordThroughPhone)
 		//重置密码
 		api.POST("/reset/password/",controller.ResetPassword)
+		//提供图形验证码
+		api.GET("/provide_captcha",controller.ProvideCaptcha)
 		//检测图形验证码
 		api.POST("/verify_captcha",controller.VerifyCaptcha)
 		//发送手机验证码
@@ -159,8 +161,7 @@ func main() {
 	router.GET("/verify_reset_password_link_through_email",controller.VerifyResetPasswordLinkThroughEmail)
 	//验证注册邮箱
 	router.GET("/verify_register_through_email",controller.VerifyRegisterThroughEmail)
-	//提供图形验证码
-	router.GET("/provide_captcha",controller.ProvideCaptcha)
+
 
 	router.Run()
 }

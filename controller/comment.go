@@ -112,12 +112,12 @@ func ListCommentByBlog(ctx *gin.Context){
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
 			return
 		}
-		blogs,err:=new(model.Comment).GetBlogComment(id,lastId,config.DefaultConfig.DefaultListSize)
+		comments,err:=new(model.Comment).GetBlogComment(id,lastId,config.DefaultConfig.DefaultListSize)
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
 		}
-		ctx.JSON(http.StatusOK, blogs)
+		ctx.JSON(http.StatusOK, comments)
 		return
 	}else{
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
