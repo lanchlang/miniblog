@@ -22,7 +22,7 @@ type CommentForm struct {
 func CreateComment(ctx *gin.Context){
 	var form CommentForm
 	// This will infer what binder to use depending on the content-type header.
-	if err := ctx.ShouldBind(&form); err != nil {
+	if err := ctx.ShouldBindJSON(&form); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "数据错误"})
 		return
 	}

@@ -19,6 +19,7 @@ func main() {
 	//store:= memstore.NewStore([]byte("secret"))
 	//limitHttpMethod:=middleware.LimitHttpMethod(http.MethodGet,http.MethodPost)
 	//router.Use(sessions.Sessions("mfsf", store))
+	router.Use(middleware.CORSMiddleware())
 	router.Use(middleware.GetLoginUser())
 	api:=router.Group("/api/v1")
 	{

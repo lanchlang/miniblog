@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"gopkg.in/validator.v2"
 	"miniblog/config"
 	"miniblog/model"
 	"miniblog/util"
@@ -150,7 +149,7 @@ func UpdateBlogById(ctx *gin.Context){
 func CreateBlog(ctx *gin.Context){
 	var form BlogForm
 	// This will infer what binder to use depending on the content-type header.
-	if err := ctx.ShouldBind(&form); err != nil {
+	if err := ctx.ShouldBindJSON(&form); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "数据错误"})
 		return
 	}
@@ -189,32 +188,29 @@ func CreateBlog(ctx *gin.Context){
 //搜索博客
 //通过blog的title进行搜索
 type SearchBlogForm struct {
-	Query    string `validate:"min=1,max=20"`
-	LastId   string `validate:"regexp=^[0-9]{0\\,20}$"`
+	Query    string `validate:"min=1,max=20" form:"query" json:"query" binding:"required"`
+	LastId   string `validate:"regexp=^[0-9]{0\\,20}$" form:"last_id" json:"last_id"`
 }
 func SearchBlog(ctx *gin.Context){
-    query:=ctx.PostForm("query")
-    lastIdStr:=ctx.PostForm("last_id")
-    form:=SearchBlogForm{
-    	Query:query,
-    	LastId:lastIdStr,
-	}
-	if err := validator.Validate(form); err != nil {
+	var form SearchBlogForm
+	// This will infer what binder to use depending on the content-type header.
+	if err := ctx.ShouldBindJSON(&form); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请输入正确搜索内容"})
 		return
 	}
+
 	lastId:=util.INT_64_MAX
 	//是否为空
-    if !util.IsEmptyString(lastIdStr){
+    if !util.IsEmptyString(form.LastId){
     	var err error
-		lastId,err=strconv.ParseInt(lastIdStr,10,64)
+		lastId,err=strconv.ParseInt(form.LastId,10,64)
 		if err!=nil{
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
 			return
 		}
 	}
     //
-    blogs,err:=new(model.Blog).SearchPublicBlog(query,lastId,config.DefaultConfig.DefaultListSize)
+    blogs,err:=new(model.Blog).SearchPublicBlog(form.Query,lastId,config.DefaultConfig.DefaultListSize)
 	if err!=nil{
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
