@@ -23,7 +23,7 @@ type UsernameExistForm struct {
 }
 
 func UsernameExist(ctx *gin.Context) {
-	username := ctx.PostForm("username")
+	username := ctx.Query("username")
 	form := UsernameExistForm{Username: username}
 	if err := validator.Validate(form); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "用户名长度只能在1到20之间,其值为字母、数字和中文"})

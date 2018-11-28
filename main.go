@@ -55,7 +55,7 @@ func main() {
 			apiUsers.GET("/:id/blogs",controller.GetListBlogByUser)
 		}
 		//blog接口
-		apiBlogs := api.Group("/posts")
+		apiBlogs := api.Group("/blogs")
 		{
 			//增删改查，列表
 			apiBlogs.GET("/:id",controller.GetBlogById)

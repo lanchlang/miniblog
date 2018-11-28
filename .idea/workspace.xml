@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2534ec50-58a3-4937-acdd-9bc142116593" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/middleware/CORSMiddleware.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/blog.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/blog.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/comment.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/comment.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/userlogin.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/userlogin.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware/CORSMiddleware.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/CORSMiddleware.go" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -97,7 +94,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="go" value="266" />
+          <entry key="go" value="267" />
           <entry key="html" value="8" />
           <entry key="http" value="2" />
           <entry key="json" value="6" />
@@ -113,7 +110,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Database Element" value="18" />
-          <entry key="Go" value="266" />
+          <entry key="Go" value="267" />
           <entry key="HTML" value="8" />
           <entry key="JSON" value="6" />
           <entry key="SQL" value="9" />
@@ -123,7 +120,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="cell" value="11" />
-          <entry key="go" value="22064" />
+          <entry key="go" value="22072" />
           <entry key="html" value="776" />
           <entry key="json" value="211" />
           <entry key="sql" value="308" />
@@ -132,7 +129,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="22064" />
+          <entry key="Go" value="22072" />
           <entry key="HTML" value="776" />
           <entry key="JSON" value="211" />
           <entry key="PLAIN_TEXT" value="54" />
@@ -151,11 +148,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="22" column="41" lean-forward="true" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
+            <state relative-caret-position="190">
+              <caret line="33" column="69" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -181,17 +178,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/userlogin.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+            <state relative-caret-position="117">
+              <caret line="25" column="35" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/middleware/CORSMiddleware.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="11" column="139" selection-start-line="11" selection-start-column="139" selection-end-line="11" selection-end-column="139" />
+            <state relative-caret-position="228">
+              <caret line="12" column="42" lean-forward="true" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
               <folding>
                 <element signature="e#20#65#0" expanded="true" />
               </folding>
@@ -297,11 +294,11 @@
         <option value="$PROJECT_DIR$/model/User.go" />
         <option value="$PROJECT_DIR$/test/model.go" />
         <option value="$PROJECT_DIR$/controller/common.go" />
-        <option value="$PROJECT_DIR$/controller/userlogin.go" />
         <option value="$PROJECT_DIR$/controller/comment.go" />
         <option value="$PROJECT_DIR$/controller/blog.go" />
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/middleware/CORSMiddleware.go" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/controller/userlogin.go" />
       </list>
     </option>
   </component>
@@ -330,11 +327,6 @@
             <path>
               <item name="miniblog" type="b2602c69:ProjectViewProjectNode" />
               <item name="miniblog" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miniblog" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miniblog" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -904,19 +896,19 @@
     <frame x="-7" y="-7" width="1166" height="694" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.610951" visible="true" weight="0.16877256" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.610951" visible="true" weight="0.16877256" />
       <window_info id="Structure" order="1" sideWeight="0.389049" side_tool="true" visible="true" weight="0.16877256" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32562277" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.27046263" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.38256228" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.38256228" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32740214" />
       <window_info anchor="bottom" id="Database Changes" order="7" weight="0.3291367" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49906892" weight="0.21174377" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49906892" weight="0.2846975" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5009311" side_tool="true" weight="0.18738739" />
       <window_info anchor="bottom" id="Database Console" order="11" weight="0.284" />
       <window_info anchor="bottom" id="REST Client" order="12" weight="0.34875444" />
@@ -1224,13 +1216,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/blog.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3671">
-          <caret line="212" column="58" selection-start-line="212" selection-start-column="58" selection-end-line="212" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller/user.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -1238,24 +1223,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/userlogin.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/middleware/GetLoginUserMiddleware.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
           <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="22" column="41" lean-forward="true" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -1268,11 +1239,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/middleware/CORSMiddleware.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="11" column="139" selection-start-line="11" selection-start-column="139" selection-end-line="11" selection-end-column="139" />
+        <state relative-caret-position="228">
+          <caret line="12" column="42" lean-forward="true" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
           <folding>
             <element signature="e#20#65#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/blog.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="227" column="5" selection-start-line="227" selection-start-column="5" selection-end-line="227" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/userlogin.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="25" column="35" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="33" column="69" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="69" />
         </state>
       </provider>
     </entry>
