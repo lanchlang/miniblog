@@ -11,7 +11,7 @@ import (
 )
 
 type CommentForm struct {
-	BlogId       int64  `form:"b_id" json:"blog_id" binding:"required"`
+	BlogId       int64  `form:"blog_id" json:"blog_id" binding:"required"`
 	Content      map[string]interface{} `form:"content" json:"content" binding:"required"`
 	Type         int8  `form:"type" json:"type" binding:"required"`  //类型
 	ReplyId       int64 `form:"reply_u_id" json:"reply_id"`
@@ -116,6 +116,9 @@ func ListCommentByBlog(ctx *gin.Context){
 		if err!=nil{
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 			return
+		}
+		if comments==nil{
+			comments=[]model.Comment{}
 		}
 		ctx.JSON(http.StatusOK, comments)
 		return
