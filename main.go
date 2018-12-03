@@ -65,10 +65,19 @@ func main() {
 			apiBlogs.DELETE("/:id",controller.DeleteBlogById)
 			apiBlogs.PUT("/:id",controller.UpdateBlogById)
 			apiBlogs.POST("/",controller.CreateBlog)
-			apiBlogs.POST("/search",controller.SearchBlog)
 			apiBlogs.POST("/ids",controller.GetListBlogByIds)
 			apiBlogs.GET("/",controller.ListBlog) //通过参数获取列表
 		}
+		//
+		api.GET("/popular",controller.BlogsByPopular)
+		//
+		api.GET("/favoriate",controller.BlogsByFavorite)
+		//
+		api.GET("/tags/:tag",controller.BlogsByTag)
+		//
+		api.GET("/category/:id",controller.BlogsByCategory)
+		//search
+		api.POST("/search/posts",controller.SearchBlog)
         //comment接口
         apiComments:=api.Group("/comments")
         {

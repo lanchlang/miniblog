@@ -99,8 +99,8 @@
       <ObjectId>2200</ObjectId>
       <Comment>standard public schema</Comment>
       <Owner>postgres</Owner>
-      <IntrospectionTimestamp>2018-11-29.17:22:03.822</IntrospectionTimestamp>
-      <IntrospectionStateNumber>762</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2018-11-29.17:26:45.768</IntrospectionTimestamp>
+      <IntrospectionStateNumber>763</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -271,7 +271,7 @@
     <table id="43" parent="19" name="t_tumblr_blog">
       <ObjectId>16549</ObjectId>
       <Owner>wanglang</Owner>
-      <StateNumber>762</StateNumber>
+      <StateNumber>763</StateNumber>
     </table>
     <table id="44" parent="19" name="t_users">
       <ObjectId>16440</ObjectId>
@@ -860,9 +860,9 @@
     </column>
     <column id="134" parent="43" name="blog">
       <Position>19</Position>
-      <DataType>integer|0s</DataType>
-      <StateNumber>762</StateNumber>
-      <TypeId>23</TypeId>
+      <DataType>text|0s</DataType>
+      <StateNumber>763</StateNumber>
+      <TypeId>25</TypeId>
     </column>
     <index id="135" parent="43" name="t_tumblr_blog_id_uindex">
       <ObjectId>16560</ObjectId>

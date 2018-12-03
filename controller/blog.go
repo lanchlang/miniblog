@@ -220,11 +220,6 @@ func SearchBlog(ctx *gin.Context){
 }
 
 //按时间顺序逆序获取
-//通过category获取列表
-//从链接中传入参数：
-//last_id,category_id(根据category获取列表)
-//popular_offset(根据热度获取列表)，like_offset(根据受欢迎的程度获取列表)
-//tag(根据tag获取列表)
 func ListBlog(ctx *gin.Context){
 	lastIdStr:=ctx.Query("last_id")
 	lastId:=util.INT_64_MAX
@@ -237,8 +232,102 @@ func ListBlog(ctx *gin.Context){
 			return
 		}
 	}
+	//获取默认列表，根据创建日期（id）
+	blogs,err:=new(model.Blog).GetPublicBlogByCreateDate(lastId,config.DefaultConfig.DefaultListSize)
+	if err!=nil{
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	ctx.JSON(http.StatusOK, blogs)
+	return
+}
+
+
+//受欢迎的blogs
+func BlogsByPopular(ctx *gin.Context){
+	//根据popularOffset来获取
+	offsetStr:=ctx.Query("offset")
+	var offset int64=0
+	//是否为空
+	if !util.IsEmptyString(offsetStr){
+		var err error
+		offset,err=strconv.ParseInt(offsetStr,10,64)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
+			return
+		}
+	}
+	blogs,err:=new(model.Blog).GetPublicBlogByPopular(int(offset),config.DefaultConfig.DefaultListSize)
+	if err!=nil{
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	ctx.JSON(http.StatusOK, blogs)
+}
+
+//最受喜欢的blogs
+func BlogsByFavorite(ctx *gin.Context){
+	var offset int64=0
+	offsetStr:=ctx.Query("offset")
+	//是否为空
+	if !util.IsEmptyString(offsetStr){
+		var err error
+		offset,err=strconv.ParseInt(offsetStr,10,64)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
+			return
+		}
+	}
+	blogs,err:=new(model.Blog).GetPublicBlogByLike(int(offset),config.DefaultConfig.DefaultListSize)
+	if err!=nil{
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+		return
+	}
+	ctx.JSON(http.StatusOK, blogs)
+}
+
+//根据tag来获取blogs
+func BlogsByTag(ctx *gin.Context){
+	lastIdStr:=ctx.Query("last_id")
+	lastId:=util.INT_64_MAX
+	//是否为空
+	if !util.IsEmptyString(lastIdStr){
+		var err error
+		lastId,err=strconv.ParseInt(lastIdStr,10,64)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
+			return
+		}
+	}
+	//根据tag来获取
+	tag:=ctx.Param("tag")
+	//是否为空
+	if !util.IsEmptyString(tag){
+		var err error
+		blogs,err:=new(model.Blog).GetPublicBlogByTag(tag,lastId,config.DefaultConfig.DefaultListSize)
+		if err!=nil{
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
+			return
+		}
+		ctx.JSON(http.StatusOK, blogs)
+	}
+}
+
+//根据category获取blogs
+func BlogsByCategory(ctx *gin.Context){
+	lastIdStr:=ctx.Query("last_id")
+	lastId:=util.INT_64_MAX
+	//是否为空
+	if !util.IsEmptyString(lastIdStr){
+		var err error
+		lastId,err=strconv.ParseInt(lastIdStr,10,64)
+		if err!=nil{
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
+			return
+		}
+	}
 	//根据categoryId来获取
-	categoryIdStr:=ctx.Query("category_id")
+	categoryIdStr:=ctx.Param("id")
 	//是否为空
 	if !util.IsEmptyString(categoryIdStr){
 		var err error
@@ -254,64 +343,7 @@ func ListBlog(ctx *gin.Context){
 		}
 		ctx.JSON(http.StatusOK, blogs)
 	}
-	//根据popularOffset来获取
-	popularOffsetStr:=ctx.Query("popular_offset")
-	//是否为空
-	if !util.IsEmptyString(popularOffsetStr){
-		var err error
-		popularOffset,err:=strconv.ParseInt(popularOffsetStr,10,64)
-		if err!=nil{
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
-			return
-		}
-		blogs,err:=new(model.Blog).GetPublicBlogByPopular(int(popularOffset),config.DefaultConfig.DefaultListSize)
-		if err!=nil{
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
-			return
-		}
-		ctx.JSON(http.StatusOK, blogs)
-	}
-	//根据popularOffset来获取
-	likeOffsetStr:=ctx.Query("like_offset")
-	//是否为空
-	if !util.IsEmptyString(likeOffsetStr){
-		var err error
-		likeOffset,err:=strconv.ParseInt(likeOffsetStr,10,64)
-		if err!=nil{
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "请求参数错误"})
-			return
-		}
-		blogs,err:=new(model.Blog).GetPublicBlogByLike(int(likeOffset),config.DefaultConfig.DefaultListSize)
-		if err!=nil{
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
-			return
-		}
-		ctx.JSON(http.StatusOK, blogs)
-	}
-	//根据tag来获取
-	tag:=ctx.Query("tag")
-	//是否为空
-	if !util.IsEmptyString(likeOffsetStr){
-		var err error
-		blogs,err:=new(model.Blog).GetPublicBlogByTag(tag,lastId,config.DefaultConfig.DefaultListSize)
-		if err!=nil{
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
-			return
-		}
-		ctx.JSON(http.StatusOK, blogs)
-	}
-	//获取默认列表，根据创建日期（id）
-	blogs,err:=new(model.Blog).GetPublicBlogByCreateDate(lastId,config.DefaultConfig.DefaultListSize)
-	if err!=nil{
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
-		return
-	}
-	ctx.JSON(http.StatusOK, blogs)
-	return
 }
-
-
-
 //like post
 func LikeBlogById(ctx *gin.Context){
 	idStr:=ctx.Param("id")
