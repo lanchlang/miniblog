@@ -21,6 +21,21 @@ func main() {
 	//router.Use(sessions.Sessions("mfsf", store))
 	router.Use(middleware.CORSMiddleware())
 	router.Use(middleware.GetLoginUser())
+	//首页
+	router.GET("/",controller.Main)
+	//通过ID获取blog
+	router.GET("/blogs/:id",controller.Blog)
+	//获取popular的blogs
+	router.GET("/popular",controller.Popular)
+	//获取favorite的blogs
+	router.GET("/favoriate",controller.Favorite)
+	//获取tag的blogs
+	router.GET("/tags/:tag",controller.BlogsByTag)
+	//获取category的blogs
+	router.GET("/category/:id",controller.Category)
+	//获取用户的blogs
+	router.GET("/users/:id",controller.User)
+	//api
 	api:=router.Group("/api/v1")
 	{
 		//检查用户名，邮箱，电话是否存在
