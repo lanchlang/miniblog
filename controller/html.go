@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"bytes"
 	"github.com/gin-gonic/gin"
 	"miniblog/config"
 	"miniblog/model"
@@ -27,6 +28,9 @@ func Main(ctx *gin.Context){
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "暂时不能服务"})
 		return
 	}
+	buffer := new(bytes.Buffer)
+	//template.UserList(userList, buffer)
+	ctx.Writer.Write(buffer.Bytes())
 	ctx.JSON(http.StatusOK, blogs)
 	return
 }
