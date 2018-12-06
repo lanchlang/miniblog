@@ -24,10 +24,10 @@ func OnQueryProcessed(event *pg.QueryProcessedEvent) {
 }
 func GetSession() *pg.DB {
 	var session = pg.Connect(&pg.Options{
-		Addr: "127.0.0.1:5432",
-		Database:  "miniblog",
-		User:      "wanglang",
-		Password:  "wanglang12345678",
+		Addr: "192.168.1.104:5432",
+		Database:  "blog",
+		User:      "blogadmin",
+		Password:  "blogadminpassword",
 		OnConnect: onConnect,
 	})
 	session.OnQueryProcessed(OnQueryProcessed)
@@ -36,10 +36,10 @@ func GetSession() *pg.DB {
 func init() {
 	//TEST connection
 	session := pg.Connect(&pg.Options{
-		Addr: "127.0.0.1",
-		Database:  "miniblog",
-		User:      "wanglang",
-		Password:  "wanglang12345678",
+		Addr: "192.168.1.104:5432",
+		Database:  "blog",
+		User:      "blogadmin",
+		Password:  "blogadminpassword",
 		OnConnect: onConnect,
 	})
 	defer session.Close()

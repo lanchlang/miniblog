@@ -2,14 +2,85 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2534ec50-58a3-4937-acdd-9bc142116593" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/template/hero/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/hero/user.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/template/hero/userlist.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/a.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/fontawesome-all.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/nicetheme.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/pure-highlight.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/reset.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/simple-line-icons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/smartideo.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/tomorrow-night-eighties.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/Simple-Line-Icons.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/fa-brands-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/fa-light-300.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/fa-solid-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/2018081117580091.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(10).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(11).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(12).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(13).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(14).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(15).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(16).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(17).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(18).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(19).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(2).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(20).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(21).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(22).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(23).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(24).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(25).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(26).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(27).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(28).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(29).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(3).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(30).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(31).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(32).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(33).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(34).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(35).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(36).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(37).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(38).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(39).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(4).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(40).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(41).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(42).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(43).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(44).php.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(5).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(6).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(7).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(8).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb(9).jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/timthumb.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/highlight.pack.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/jquery-migrate.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/jquery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/lazysizes.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/nicetheme.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/plugins.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/share.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/smartideo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/wp-emoji-release.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/html.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/html.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/models.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template_email_verify.html.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/template_reset_password.html.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/template_reset_password_through_email.html.go" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,42 +100,7 @@
     <expand>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="miniblog@localhost" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="miniblog@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="miniblog@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="miniblog: database" type="6d9b600a:PostgresImplModel$Database" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="miniblog@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="miniblog: database" type="6d9b600a:PostgresImplModel$Database" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="miniblog@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="miniblog: database" type="6d9b600a:PostgresImplModel$Database" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="public: schema" type="a16502c0:PostgresImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="miniblog@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="miniblog: database" type="6d9b600a:PostgresImplModel$Database" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="public: schema" type="a16502c0:PostgresImplModel$Schema" />
-        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="blog@192.168.1.104" type="feb32156:DbDataSourceImpl" />
       </path>
     </expand>
     <select />
@@ -145,27 +181,86 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/template/hero/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
+            <state relative-caret-position="150">
               <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$USER_HOME$/Desktop/theme/专题 – Cosy主题演示站.html">
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1429">
-              <caret line="806" column="46" selection-start-line="806" selection-start-column="46" selection-end-line="806" selection-end-column="46" />
+            <state relative-caret-position="375">
+              <caret line="25" column="46" lean-forward="true" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#div#3;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#header#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#section#3;n#body#0;n#html#0;n#!!top" />
+                <element signature="e#14#179#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="a.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/a.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="977">
+              <caret line="2697" column="7" lean-forward="true" selection-start-line="2697" selection-start-column="7" selection-end-line="2697" selection-end-column="7" />
+              <folding>
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#0;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#2;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#3;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#1;n#div#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#2;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#3;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#4;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#5;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#6;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#7;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#2;n#div#0;n#div#0;n#main#0;n#div#0;n#section#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#5;n#div#0;n#div#0;n#main#0;n#div#0;n#section#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#76829#76834#0#HTML" expanded="true" />
+                <element signature="e#77073#77078#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#main#0;n#div#0;n#section#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#div#2;n#div#0;n#main#0;n#div#0;n#section#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#section#6;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Authority.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/Authority.go">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="Blog.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/Blog.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="214">
+              <caret line="269" column="20" selection-start-line="269" selection-start-column="20" selection-end-line="269" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/models.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -186,17 +281,27 @@
       <find>PhoneExist</find>
       <find>Buffer</find>
       <find>hasLogin</find>
+      <find>./Cosy主题-CMS杂志样式 – Array — A finely crafted project by nicetheme_files</find>
+      <find>&amp;#39;</find>
+      <find>&amp;quot;</find>
+      <find>.php</find>
+      <find>).php</find>
+      <find>yddContainer</find>
+      <find>static</find>
     </findStrings>
+    <replaceStrings>
+      <replace>/static</replace>
+      <replace>'</replace>
+      <replace>).jpg</replace>
+    </replaceStrings>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/test/base64CaptchaTest.go" />
-        <option value="$PROJECT_DIR$/util/mail.go" />
         <option value="$PROJECT_DIR$/verifycode.html" />
         <option value="$PROJECT_DIR$/config/aliyun_message_config.json" />
         <option value="$PROJECT_DIR$/util/random.go" />
@@ -220,7 +325,6 @@
         <option value="$PROJECT_DIR$/model/PhoneCaptcha.go" />
         <option value="$PROJECT_DIR$/model/Role.go" />
         <option value="$PROJECT_DIR$/model/Verification.go" />
-        <option value="$PROJECT_DIR$/model/models.go" />
         <option value="$PROJECT_DIR$/model/Blog.go" />
         <option value="$PROJECT_DIR$/util/config.go" />
         <option value="$PROJECT_DIR$/config/aliyun.go" />
@@ -240,12 +344,15 @@
         <option value="$PROJECT_DIR$/controller/comment.go" />
         <option value="$PROJECT_DIR$/tables/miniblog_public_t_tumblr_blog.sql" />
         <option value="$PROJECT_DIR$/controller/blog.go" />
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/userlist.html" />
         <option value="$PROJECT_DIR$/templates/user.html" />
         <option value="$PROJECT_DIR$/controller/html.go" />
         <option value="$USER_HOME$/Desktop/theme/专题 – Cosy主题演示站.html" />
+        <option value="$PROJECT_DIR$/static/index.html" />
+        <option value="$PROJECT_DIR$/model/models.go" />
+        <option value="$PROJECT_DIR$/static/a.html" />
+        <option value="$PROJECT_DIR$/main.go" />
       </list>
     </option>
   </component>
@@ -255,13 +362,18 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1415" />
     <option name="height" value="860" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -278,13 +390,7 @@
             <path>
               <item name="miniblog" type="b2602c69:ProjectViewProjectNode" />
               <item name="miniblog" type="462c0819:PsiDirectoryNode" />
-              <item name="template" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="miniblog" type="b2602c69:ProjectViewProjectNode" />
-              <item name="miniblog" type="462c0819:PsiDirectoryNode" />
-              <item name="template" type="462c0819:PsiDirectoryNode" />
-              <item name="hero" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="miniblog" type="b2602c69:ProjectViewProjectNode" />
@@ -293,7 +399,7 @@
             <path>
               <item name="miniblog" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Go SDK 1.11" type="20ee2d1f:SyntheticLibraryElementNode" />
+              <item name="GOPATH &lt;miniblog&gt;" type="20ee2d1f:SyntheticLibraryElementNode" />
             </path>
           </expand>
           <select />
@@ -305,24 +411,29 @@
     <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="PostgreSQL" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\apple\go\src\miniblog\template\hero" />
-      <recent name="C:\Users\apple\go\src\miniblog\config" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/image" />
       <recent name="C:\Users\apple\go\src\miniblog\tables" />
       <recent name="C:\Users\apple\go\src\miniblog\template" />
       <recent name="C:\Users\apple\go\src\miniblog\model" />
       <recent name="C:\Users\apple\go\src\miniblog" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/fonts" />
+      <recent name="$PROJECT_DIR$/static/image" />
+      <recent name="$PROJECT_DIR$/static" />
+      <recent name="$PROJECT_DIR$/static/css" />
+      <recent name="$PROJECT_DIR$/static/js" />
     </key>
   </component>
   <component name="RestClientSettings">
@@ -794,7 +905,6 @@
       <filePath value="$PROJECT_DIR$/test/闭包测试.go" />
       <package value="miniblog" />
       <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
     </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="miniblog" />
@@ -803,7 +913,6 @@
       <filePath value="$PROJECT_DIR$/main.go" />
       <package value="miniblog" />
       <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
     </configuration>
     <configuration name="go build model.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="miniblog" />
@@ -812,7 +921,6 @@
       <filePath value="$PROJECT_DIR$/test/model.go" />
       <package value="miniblog" />
       <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
     </configuration>
     <configuration name="go build regex.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="miniblog" />
@@ -821,7 +929,6 @@
       <filePath value="$PROJECT_DIR$/test/regex.go" />
       <package value="miniblog" />
       <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
     </configuration>
     <configuration name="go build template.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="miniblog" />
@@ -830,7 +937,14 @@
       <filePath value="$PROJECT_DIR$/test/template.go" />
       <package value="miniblog" />
       <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <framework value="gotest" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
     </configuration>
     <list>
       <item itemvalue="Go Build.go build regex.go" />
@@ -862,51 +976,51 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1166" height="694" extended-state="6" />
+    <frame x="0" y="-1" width="1920" height="1054" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5010352" visible="true" weight="0.19675091" />
-      <window_info id="Structure" order="1" sideWeight="0.49896482" side_tool="true" visible="true" weight="0.19675091" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32562277" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.26978418" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.38256228" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19903949" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32740214" />
-      <window_info anchor="bottom" id="Database Changes" order="7" weight="0.3291367" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49906892" visible="true" weight="0.14056939" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5009311" side_tool="true" weight="0.18738739" />
-      <window_info anchor="bottom" id="Database Console" order="11" weight="0.284" />
-      <window_info anchor="bottom" id="REST Client" order="12" weight="0.34875444" />
+      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.1905016" />
+      <window_info anchor="bottom" id="Database Changes" order="7" weight="0.3291367" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.26898047" />
+      <window_info id="Structure" order="1" side_tool="true" visible="true" weight="0.19903949" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49906892" weight="0.18112798" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.38256228" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" weight="0.19087523" />
+      <window_info anchor="bottom" id="REST Client" order="12" weight="0.34875444" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Database Console" order="11" weight="0.284" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32562277" />
     </layout>
     <layout-to-restore>
+      <window_info anchor="bottom" id="Database Console" order="11" weight="0.284" />
+      <window_info anchor="bottom" id="REST Client" order="12" weight="0.34875444" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.19604316" visible="true" weight="0.32588455" />
       <window_info active="true" id="Structure" order="1" sideWeight="0.8039568" side_tool="true" visible="true" weight="0.32588455" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32562277" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.26978418" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.38256228" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32740214" />
       <window_info anchor="bottom" id="Database Changes" order="7" weight="0.3291367" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.26978418" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.38256228" />
+      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.19087523" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49906892" weight="0.28417265" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5009311" side_tool="true" weight="0.18738739" />
-      <window_info anchor="bottom" id="Database Console" order="11" weight="0.284" />
-      <window_info anchor="bottom" id="REST Client" order="12" weight="0.34875444" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.19087523" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32562277" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -916,29 +1030,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tables/miniblog_public_t_authority.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tables/miniblog_public_t_blog.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-99" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tables/miniblog_public_t_category.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1771" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tables/miniblog_public_t_comment.sql">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tables/miniblog_public_t_departments.sql">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/tables/miniblog_public_t_email_register_user.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -951,13 +1042,7 @@
     <entry file="file://$PROJECT_DIR$/tables/miniblog_public_t_role.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://C:/Go/src/net/http/header.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="37" column="64" selection-start-line="37" selection-start-column="64" selection-end-line="37" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Go/src/net/http/header.go" />
     <entry file="file://$PROJECT_DIR$/admincontroller/builder.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -979,13 +1064,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://9285aece-b820-49b5-905a-5ffbf332c766/database/miniblog/schema/public/table/t_users">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://9285aece-b820-49b5-905a-5ffbf332c766/database/miniblog/schema/public/table/t_users" />
     <entry file="file://$PROJECT_DIR$/test/model.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -993,13 +1072,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../gopkg.in/validator.v2/validator.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="35">
-          <caret line="205" selection-start-line="205" selection-end-line="205" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../gopkg.in/validator.v2/validator.go" />
     <entry file="file://$PROJECT_DIR$/model/User.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -1014,9 +1087,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/rest-api_1.http">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/rest-api_1.http" />
     <entry file="file://$PROJECT_DIR$/util/jwt.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="908">
@@ -1048,13 +1119,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/models.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="158" column="5" selection-start-line="158" selection-start-column="5" selection-end-line="158" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/common.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -1062,18 +1126,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://9285aece-b820-49b5-905a-5ffbf332c766/database/miniblog/schema/public/table/t_blog">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-          <column-attributes>
-            <column name="cover" languageId="JSON" />
-            <column name="content" languageId="JSON" />
-            <column name="ctid" enabled="false" />
-          </column-attributes>
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://9285aece-b820-49b5-905a-5ffbf332c766/database/miniblog/schema/public/table/t_blog" />
     <entry file="file://$PROJECT_DIR$/model/Comment.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="267">
@@ -1088,13 +1141,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://9285aece-b820-49b5-905a-5ffbf332c766/database/miniblog/schema/public/table/t_comment">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://9285aece-b820-49b5-905a-5ffbf332c766/database/miniblog/schema/public/table/t_comment" />
     <entry file="file://$PROJECT_DIR$/tables/miniblog_public_t_tumblr_blog.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-76">
@@ -1102,35 +1149,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller/blog.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4389">
           <caret line="315" selection-start-line="315" selection-end-line="345" selection-end-column="1" />
-          <folding>
-            <element signature="e#553#899#0" />
-            <element signature="e#1143#1228#0" />
-            <element signature="n#!!block;n#BlogsByPopular#0" />
-            <element signature="n#!!block;n#BlogsByFavorite#0" />
-            <element signature="n#!!block;n#BlogsByTag#0" />
-            <element signature="n#!!block;n#BlogsByCategory#0" />
-            <element signature="n#!!block;n#LikeBlogById#0" />
-            <element signature="n#!!block;n#UnLikeBlogById#0" />
-            <element signature="n#!!block;n#GetListBlogByIds#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/Blog.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5643">
-          <caret line="301" column="18" selection-start-line="301" selection-start-column="18" selection-end-line="301" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -1138,9 +1160,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="11" selection-start-line="11" selection-end-line="56" />
-          <folding>
-            <element signature="n#!!block;n#GetListBlogByUser#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1158,34 +1177,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template/reset_password_through_email.html.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/reset_password.html.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template/email_verify.html.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/userlist.html.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/unsafe/unsafe.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-285" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/template/reset_password_through_email.html.go" />
+    <entry file="file://$PROJECT_DIR$/template/reset_password.html.go" />
+    <entry file="file://$PROJECT_DIR$/template/email_verify.html.go" />
+    <entry file="file://$PROJECT_DIR$/templates/userlist.html.go" />
+    <entry file="file://C:/Go/src/unsafe/unsafe.go" />
+    <entry file="file://$PROJECT_DIR$/templates/index.html.go" />
     <entry file="file://$PROJECT_DIR$/template/hero/user.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -1217,9 +1214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
-          <folding>
-            <element signature="e#20#135#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1230,23 +1224,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Desktop/theme/专题 – Cosy主题演示站.html" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/20dff463-ab73-4e8e-bb0c-69d852108f21/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/template/hero/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
+        <state relative-caret-position="150">
           <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/theme/专题 – Cosy主题演示站.html">
+    <entry file="file://$PROJECT_DIR$/model/Authority.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/Blog.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1429">
-          <caret line="806" column="46" selection-start-line="806" selection-start-column="46" selection-end-line="806" selection-end-column="46" />
+        <state relative-caret-position="214">
+          <caret line="269" column="20" selection-start-line="269" selection-start-column="20" selection-end-line="269" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/models.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/a.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="977">
+          <caret line="2697" column="7" lean-forward="true" selection-start-line="2697" selection-start-column="7" selection-end-line="2697" selection-end-column="7" />
           <folding>
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#0;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#1;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#header#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#section#3;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#2;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#3;n#div#0;n#div#1;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#1;n#div#0;n#div#1;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#section#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#2;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#3;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#4;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#5;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#6;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#7;n#div#0;n#div#0;n#section#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#2;n#div#0;n#div#0;n#main#0;n#div#0;n#section#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#article#0;n#div#5;n#div#0;n#div#0;n#main#0;n#div#0;n#section#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#76829#76834#0#HTML" expanded="true" />
+            <element signature="e#77073#77078#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#main#0;n#div#0;n#section#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#2;n#div#0;n#main#0;n#div#0;n#section#5;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#section#6;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/image/timthumb.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../github.com/gin-gonic/gin/gin.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="146" column="5" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="46" lean-forward="true" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
+          <folding>
+            <element signature="e#14#179#0" expanded="true" />
           </folding>
         </state>
       </provider>

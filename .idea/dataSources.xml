@@ -7,11 +7,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="miniblog@localhost" uuid="9285aece-b820-49b5-905a-5ffbf332c766">
+    <data-source source="LOCAL" name="blog@192.168.1.104" uuid="20dff463-ab73-4e8e-bb0c-69d852108f21">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/miniblog</jdbc-url>
+      <jdbc-url>jdbc:postgresql://192.168.1.104:5432/blog</jdbc-url>
     </data-source>
   </component>
 </project>

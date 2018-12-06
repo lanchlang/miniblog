@@ -2,7 +2,7 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="postgres@localhost" uuid="6d8b6e98-f228-48ef-b44b-1219687eac79">
-      <database-info product="PostgreSQL" version="11.1" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2" family="POSTGRES" exact-version="11.1">
+      <database-info product="PostgreSQL" version="11.1" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
@@ -10,14 +10,14 @@
       <user-name>postgres</user-name>
       <introspection-schemas>miniblog:</introspection-schemas>
     </data-source>
-    <data-source name="miniblog@localhost" uuid="9285aece-b820-49b5-905a-5ffbf332c766">
-      <database-info product="PostgreSQL" version="11.1" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2" family="POSTGRES" exact-version="11.1">
+    <data-source name="blog@192.168.1.104" uuid="20dff463-ab73-4e8e-bb0c-69d852108f21">
+      <database-info product="PostgreSQL" version="9.6.2" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
-      <user-name>wanglang</user-name>
-      <introspection-schemas>@:@</introspection-schemas>
+      <user-name>blogadmin</user-name>
+      <introspection-schemas>blog:public</introspection-schemas>
     </data-source>
   </component>
 </project>
